@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../../services/api';
 import Colors from '../../constants/Colors';
+import Toast from 'react-native-toast-message';
 
 export default function LoginScreen() {
     const router = useRouter();
@@ -28,6 +29,12 @@ export default function LoginScreen() {
 
             await AsyncStorage.setItem('token', token);
             await AsyncStorage.setItem('user', JSON.stringify(user));
+
+            Toast.show({
+                type: 'success',
+                text1: 'Login Berhasil',
+                text2: `Selamat datang kembali, ${user.name}`
+            });
 
             router.replace('/(tabs)');
         } catch (err: any) {

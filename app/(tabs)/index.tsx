@@ -8,6 +8,7 @@ import api from '../../services/api';
 import RecipeCard from '../../components/RecipeCard';
 import Colors from '../../constants/Colors';
 import { Recipe } from '../../types/Recipe';
+import Toast from 'react-native-toast-message';
 
 export default function HomeScreen() {
     const router = useRouter();
@@ -55,6 +56,11 @@ export default function HomeScreen() {
     const handleLogout = async () => {
         await AsyncStorage.removeItem('token');
         await AsyncStorage.removeItem('user');
+        Toast.show({
+            type: 'success',
+            text1: 'Logout Berhasil',
+            text2: 'Sampai jumpa lagi!'
+        });
         router.replace('/(auth)/login');
     };
 

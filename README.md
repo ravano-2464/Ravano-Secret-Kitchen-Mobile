@@ -55,42 +55,58 @@ Pastikan Anda sudah menginstal Node.js dan Expo Go di HP Anda.
 Berikut adalah struktur folder utama aplikasi mobile:
 
 ```
-mobile/
-├── 📁 app/                 # Routing & Screen (Expo Router)
-│   ├── 📁 (auth)/          # Authentikasi (Login/Register)
-│   │   ├── _layout.tsx
-│   │   ├── login.tsx       # Halaman Login
-│   │   └── register.tsx    # Halaman Register
-│   ├── 📁 (tabs)/          # Navigasi Tab Utama
-│   │   ├── _layout.tsx
-│   │   └── index.tsx       # Halaman Utama (Home)
-│   ├── 📁 recipe/          # Halaman Detail Resep
-│   │   └── [id].tsx        # Dynamic Route untuk Detail Resep
-│   ├── _layout.tsx         # Layout Root
-│   ├── +html.tsx           # Entry point untuk Web
-│   ├── +not-found.tsx      # Halaman 404
-│   └── modal.tsx           # Layar Modal
-├── 📁 assets/              # Gambar & Font
-├── 📁 components/          # Komponen UI Reusable
-│   ├── __tests__/          # Testing
-│   ├── EditScreenInfo.tsx
-│   ├── ExternalLink.tsx
-│   ├── RecipeCard.tsx      # Komponen Kartu Resep
-│   ├── StyledText.tsx
-│   ├── Themed.tsx          # Komponen Tema (Light/Dark)
-│   ├── VideoPlayer.tsx     # Komponen Video Player
-│   └── ...                 # Hooks (useColorScheme, dll)
-├── 📁 constants/           # Konstanta Aplikasi
-│   └── Colors.ts           # Skema Warna
-├── 📁 services/            # Logika API & Jaringan
-│   └── api.ts              # Konfigurasi Axios
-├── 📁 types/               # Definisi Tipe Data
-│   └── Recipe.ts           # Interface Recipe
-├── .env                    # Variabel Lingkungan (API URL)
-├── app.json                # Konfigurasi Expo
-├── babel.config.js
-├── package.json            # Dependensi Proyek
-└── tsconfig.json           # Konfigurasi TypeScript
+├── 📁 .qodo
+│   ├── 📁 agents
+│   └── 📁 workflows
+├── 📁 app
+│   ├── 📁 (auth)
+│   │   ├── 📄 _layout.tsx
+│   │   ├── 📄 login.tsx
+│   │   └── 📄 register.tsx
+│   ├── 📁 (tabs)
+│   │   ├── 📄 _layout.tsx
+│   │   └── 📄 index.tsx
+│   ├── 📁 recipe
+│   │   └── 📄 [id].tsx
+│   ├── 📄 +html.tsx
+│   ├── 📄 +not-found.tsx
+│   ├── 📄 _layout.tsx
+│   └── 📄 modal.tsx
+├── 📁 assets
+│   ├── 📁 fonts
+│   │   └── 📄 SpaceMono-Regular.ttf
+│   └── 📁 images
+│       ├── 🖼️ adaptive-icon.png
+│       ├── 🖼️ favicon.png
+│       ├── 🖼️ icon.png
+│       └── 🖼️ splash-icon.png
+├── 📁 components
+│   ├── 📁 __tests__
+│   │   └── 📄 StyledText-test.js
+│   ├── 📄 EditScreenInfo.tsx
+│   ├── 📄 ExternalLink.tsx
+│   ├── 📄 RecipeCard.tsx
+│   ├── 📄 StyledText.tsx
+│   ├── 📄 Themed.tsx
+│   ├── 📄 VideoPlayer.tsx
+│   ├── 📄 VideoPlayer.web.tsx
+│   ├── 📄 useClientOnlyValue.ts
+│   ├── 📄 useClientOnlyValue.web.ts
+│   ├── 📄 useColorScheme.ts
+│   └── 📄 useColorScheme.web.ts
+├── 📁 constants
+│   └── 📄 Colors.ts
+├── 📁 services
+│   └── 📄 api.ts
+├── 📁 types
+│   └── 📄 Recipe.ts
+├── ⚙️ .gitignore
+├── 📝 README.md
+├── ⚙️ app.json
+├── 📄 babel.config.js
+├── ⚙️ package-lock.json
+├── ⚙️ package.json
+└── ⚙️ tsconfig.json
 ```
 
 ## �📸 Screenshots

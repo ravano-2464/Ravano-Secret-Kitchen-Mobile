@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../../services/api';
 import Colors from '../../constants/Colors';
+import Toast from 'react-native-toast-message';
 
 export default function RegisterScreen() {
     const router = useRouter();
@@ -30,9 +31,14 @@ export default function RegisterScreen() {
         setLoading(true);
         try {
             await api.post('/auth/register', { name, email, password });
-            Alert.alert('Sukses', 'Registrasi berhasil, silakan login', [
-                { text: 'OK', onPress: () => router.push('/(auth)/login') }
-            ]);
+
+            Toast.show({
+                type: 'success',
+                text1: 'Registrasi Berhasil',
+                text2: 'Silakan login dengan akun baru Anda'
+            });
+
+            router.push('/(auth)/login');
         } catch (err: any) {
             setError(err.response?.data?.message || 'Terjadi kesalahan');
         } finally {
