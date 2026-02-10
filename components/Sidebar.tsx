@@ -44,7 +44,7 @@ export default function Sidebar(props: DrawerContentComponentProps) {
 
     return (
         <>
-            <DrawerContentScrollView {...props} contentContainerStyle={styles.container}>
+            <DrawerContentScrollView {...props} contentContainerStyle={styles.container} style={{ backgroundColor: Colors.light.primary }}>
                 <View style={styles.header}>
                     <View style={styles.logoContainer}>
                         <Ionicons name="restaurant" size={32} color={Colors.light.primary} />
@@ -60,7 +60,7 @@ export default function Sidebar(props: DrawerContentComponentProps) {
                         style={styles.searchButton}
                         onPress={openSearchModal}
                     >
-                        <Ionicons name="search-outline" size={24} color={Colors.light.gray} />
+                        <Ionicons name="search-outline" size={24} color="#fff" />
                         <Text style={styles.searchButtonText}>Cari Resep</Text>
                     </TouchableOpacity>
 
@@ -69,7 +69,7 @@ export default function Sidebar(props: DrawerContentComponentProps) {
 
                 <View style={styles.footer}>
                     <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-                        <Ionicons name="log-out-outline" size={24} color={Colors.light.gray} />
+                        <Ionicons name="log-out-outline" size={24} color="#fff" />
                         <Text style={styles.logoutText}>Keluar</Text>
                     </TouchableOpacity>
                 </View>
@@ -86,6 +86,7 @@ export default function Sidebar(props: DrawerContentComponentProps) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: Colors.light.primary,
     },
     header: {
         padding: 20,
@@ -128,17 +129,18 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 12,
         borderRadius: 8,
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
     },
     searchButtonText: {
         fontSize: 14,
         fontWeight: '500',
-        color: Colors.light.gray,
+        color: '#fff',
         marginLeft: 18,
     },
     footer: {
         padding: 20,
         borderTopWidth: 1,
-        borderTopColor: Colors.light.border,
+        borderTopColor: 'rgba(255, 255, 255, 0.2)',
     },
     logoutButton: {
         flexDirection: 'row',
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
     },
     logoutText: {
         fontSize: 16,
-        color: Colors.light.gray,
+        color: '#fff',
         fontWeight: '500',
     },
 });

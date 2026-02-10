@@ -36,7 +36,9 @@ export default function DrawerLayout() {
           backgroundColor: Colors[colorScheme ?? 'light'].background,
         },
         headerTintColor: Colors[colorScheme ?? 'light'].text,
-        drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        drawerActiveTintColor: '#fff',
+        drawerInactiveTintColor: 'rgba(255, 255, 255, 0.8)',
+        drawerActiveBackgroundColor: 'rgba(255, 255, 255, 0.2)',
         drawerLabelStyle: {
           marginLeft: 10,
         },
