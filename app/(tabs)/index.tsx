@@ -1,17 +1,14 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { StyleSheet, FlatList, View, Text, TextInput, TouchableOpacity, ActivityIndicator, RefreshControl, StatusBar, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../../services/api';
 import RecipeCard from '../../components/RecipeCard';
 import Colors from '../../constants/Colors';
 import { Recipe } from '../../types/Recipe';
-import Toast from 'react-native-toast-message';
 
 export default function HomeScreen() {
-    const router = useRouter();
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
@@ -53,16 +50,7 @@ export default function HomeScreen() {
         fetchRecipes();
     };
 
-    const handleLogout = async () => {
-        await AsyncStorage.removeItem('token');
-        await AsyncStorage.removeItem('user');
-        Toast.show({
-            type: 'success',
-            text1: 'Logout Berhasil',
-            text2: 'Sampai jumpa lagi!'
-        });
-        router.replace('/(auth)/login');
-    };
+
 
     const categories = useMemo(() => {
         const cats = Array.from(new Set(recipes.map(r => r.category)));
@@ -160,10 +148,6 @@ export default function HomeScreen() {
                         </Text>
                     </View>
                 </View>
-                <TouchableOpacity style={styles.logoutButton} onPress={handleLogout} activeOpacity={0.7}>
-                    <Ionicons name="log-out-outline" size={18} color={Colors.light.gray} />
-                    <Text style={styles.logoutText}>Keluar</Text>
-                </TouchableOpacity>
             </View>
 
             <FlatList
