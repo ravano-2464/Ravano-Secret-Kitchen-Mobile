@@ -75,7 +75,7 @@ export default function RecipeDetailScreen() {
     }
 
     const getVideoId = (url: string) => {
-        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
         const match = url.match(regExp);
         return (match && match[2].length === 11) ? match[2] : null;
     };
@@ -407,17 +407,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 
-    videoContainer: {
-        height: 220,
-        width: '100%',
-        backgroundColor: '#000',
-        borderRadius: 12,
-        overflow: 'hidden',
-        marginTop: 8,
-    },
-    webview: {
-        flex: 1,
-    },
+
     videoPlaceholder: {
         textAlign: 'center',
         color: Colors.light.gray,

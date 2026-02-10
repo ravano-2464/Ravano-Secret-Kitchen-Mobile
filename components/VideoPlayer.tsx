@@ -41,14 +41,17 @@ export default function VideoPlayer({ videoId }: VideoPlayerProps) {
                 allowsInlineMediaPlayback={true}
                 mediaPlaybackRequiresUserAction={false}
                 startInLoadingState={true}
+                originWhitelist={['*']}
+                userAgent="Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
                 renderLoading={() => (
                     <View style={styles.loadingContainer}>
                         <ActivityIndicator size="large" color="#ff0000" />
                     </View>
                 )}
                 source={{
-                    uri: `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0&modestbranding=1&enablejsapi=1&controls=1`,
+                    uri: `https://www.youtube.com/watch?v=${videoId}`,
                 }}
+                onError={(e) => console.error('VideoPlayer Error:', e.nativeEvent)}
             />
         </View>
     );
