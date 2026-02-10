@@ -1,20 +1,24 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { StyleSheet, FlatList, View, Text, TextInput, TouchableOpacity, ActivityIndicator, RefreshControl, StatusBar, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
-import api from '../../services/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ActivityIndicator, FlatList, RefreshControl, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import HomeHeader from '../../components/HomeHeader';
 import RecipeCard from '../../components/RecipeCard';
+import SearchDialogModal from '../../components/SearchDialogModal';
 import Colors from '../../constants/Colors';
+import api from '../../services/api';
 import { Recipe } from '../../types/Recipe';
 
 export default function HomeScreen() {
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
-    const [searchQuery, setSearchQuery] = useState('');
     const [activeCategory, setActiveCategory] = useState('Semua');
     const [userName, setUserName] = useState('User');
+
+    const [searchModalVisible, setSearchModalVisible] = useState(false);
 
     const fetchRecipes = async () => {
         try {
@@ -50,8 +54,6 @@ export default function HomeScreen() {
         fetchRecipes();
     };
 
-
-
     const categories = useMemo(() => {
         const cats = Array.from(new Set(recipes.map(r => r.category)));
         return ['Semua', ...cats];
@@ -64,16 +66,8 @@ export default function HomeScreen() {
             result = result.filter(recipe => recipe.category === activeCategory);
         }
 
-        if (searchQuery.trim()) {
-            const query = searchQuery.toLowerCase();
-            result = result.filter(recipe =>
-                recipe.title.toLowerCase().includes(query) ||
-                recipe.description?.toLowerCase().includes(query)
-            );
-        }
-
         return result;
-    }, [recipes, activeCategory, searchQuery]);
+    }, [recipes, activeCategory]);
 
     if (loading) {
         return (
@@ -83,54 +77,11 @@ export default function HomeScreen() {
         );
     }
 
-    const renderHeader = () => (
-        <View>
-            <View style={styles.heroSection}>
-                <Text style={styles.heroTitle}>Jelajahi Resep Masakan</Text>
-                <Text style={styles.heroSubtitle}>
-                    Temukan berbagai resep masakan Indonesia untuk keluarga dan usaha Anda
-                </Text>
+    const navigation = useNavigation();
 
-                <View style={styles.searchBar}>
-                    <Ionicons name="search" size={18} color={Colors.light.gray} />
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder="Cari resep..."
-                        value={searchQuery}
-                        onChangeText={setSearchQuery}
-                        placeholderTextColor={Colors.light.gray}
-                    />
-                </View>
-            </View>
-
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.categoryContainer}
-            >
-                {categories.map((category) => (
-                    <TouchableOpacity
-                        key={category}
-                        style={[
-                            styles.categoryButton,
-                            activeCategory === category && styles.categoryButtonActive,
-                        ]}
-                        onPress={() => setActiveCategory(category)}
-                        activeOpacity={0.7}
-                    >
-                        <Text
-                            style={[
-                                styles.categoryText,
-                                activeCategory === category && styles.categoryTextActive,
-                            ]}
-                        >
-                            {category}
-                        </Text>
-                    </TouchableOpacity>
-                ))}
-            </ScrollView>
-        </View>
-    );
+    const toggleDrawer = () => {
+        navigation.dispatch(DrawerActions.toggleDrawer());
+    };
 
     return (
         <SafeAreaView style={styles.container} edges={['top']}>
@@ -138,6 +89,9 @@ export default function HomeScreen() {
 
             <View style={styles.navbar}>
                 <View style={styles.navbarBrand}>
+                    <TouchableOpacity onPress={toggleDrawer} style={{ marginRight: 12 }}>
+                        <Ionicons name="menu" size={28} color={Colors.light.text} />
+                    </TouchableOpacity>
                     <View style={styles.navbarLogo}>
                         <Ionicons name="restaurant" size={20} color="#fff" />
                     </View>
@@ -155,7 +109,17 @@ export default function HomeScreen() {
                 renderItem={({ item }) => <RecipeCard recipe={item} />}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={styles.listContent}
-                ListHeaderComponent={renderHeader}
+                keyboardShouldPersistTaps="handled"
+                ListHeaderComponent={
+                    <HomeHeader
+                        searchQuery=""
+                        setSearchQuery={() => { }}
+                        categories={categories}
+                        activeCategory={activeCategory}
+                        setActiveCategory={setActiveCategory}
+                        onSearchPress={() => setSearchModalVisible(true)}
+                    />
+                }
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[Colors.light.primary]} />
                 }
@@ -165,6 +129,11 @@ export default function HomeScreen() {
                     </View>
                 }
                 showsVerticalScrollIndicator={false}
+            />
+
+            <SearchDialogModal
+                visible={searchModalVisible}
+                onClose={() => setSearchModalVisible(false)}
             />
         </SafeAreaView>
     );
@@ -182,7 +151,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.light.background,
     },
 
-    // Navbar
     navbar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -232,78 +200,6 @@ const styles = StyleSheet.create({
     logoutText: {
         fontSize: 14,
         color: Colors.light.gray,
-    },
-
-    // Hero
-    heroSection: {
-        alignItems: 'center',
-        paddingTop: 24,
-        paddingBottom: 16,
-        paddingHorizontal: 20,
-        backgroundColor: '#fef3ee',
-    },
-    heroTitle: {
-        fontSize: 22,
-        fontWeight: '700',
-        color: Colors.light.text,
-        marginBottom: 8,
-        textAlign: 'center',
-    },
-    heroSubtitle: {
-        fontSize: 14,
-        color: Colors.light.gray,
-        marginBottom: 16,
-        textAlign: 'center',
-        lineHeight: 20,
-    },
-
-    // Search Bar
-    searchBar: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: Colors.light.card,
-        borderWidth: 1,
-        borderColor: Colors.light.border,
-        borderRadius: 8,
-        paddingHorizontal: 12,
-        paddingVertical: 10,
-        gap: 10,
-        width: '100%',
-        maxWidth: 400,
-    },
-    searchInput: {
-        flex: 1,
-        fontSize: 15,
-        color: Colors.light.text,
-        padding: 0,
-    },
-
-    // Category Filter
-    categoryContainer: {
-        paddingHorizontal: 20,
-        paddingVertical: 16,
-        gap: 8,
-    },
-    categoryButton: {
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: Colors.light.border,
-        backgroundColor: Colors.light.card,
-        marginRight: 8,
-    },
-    categoryButtonActive: {
-        backgroundColor: Colors.light.primary,
-        borderColor: Colors.light.primary,
-    },
-    categoryText: {
-        fontSize: 14,
-        fontWeight: '500',
-        color: Colors.light.gray,
-    },
-    categoryTextActive: {
-        color: '#fff',
     },
 
     listContent: {

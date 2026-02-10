@@ -65,7 +65,8 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │   │   └── 📄 register.tsx
 │   ├── 📁 (tabs)
 │   │   ├── 📄 _layout.tsx
-│   │   └── 📄 index.tsx
+│   │   ├── 📄 index.tsx
+│   │   └── 📄 profile.tsx
 │   ├── 📁 recipe
 │   │   └── 📄 [id].tsx
 │   ├── 📄 +html.tsx
@@ -85,7 +86,10 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │   │   └── 📄 StyledText-test.js
 │   ├── 📄 EditScreenInfo.tsx
 │   ├── 📄 ExternalLink.tsx
+│   ├── 📄 HomeHeader.tsx
 │   ├── 📄 RecipeCard.tsx
+│   ├── 📄 SearchDialogModal.tsx
+│   ├── 📄 Sidebar.tsx
 │   ├── 📄 StyledText.tsx
 │   ├── 📄 Themed.tsx
 │   ├── 📄 VideoPlayer.tsx

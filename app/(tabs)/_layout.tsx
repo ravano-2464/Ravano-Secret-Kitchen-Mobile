@@ -1,51 +1,73 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Tabs } from 'expo-router';
-
-import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
+import Colors from '@/constants/Colors';
+import { Ionicons } from '@expo/vector-icons';
+import { DrawerActions } from '@react-navigation/native';
+import { useNavigation } from 'expo-router';
+import { Drawer } from 'expo-router/drawer';
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+import Sidebar from '@/components/Sidebar';
 
-export default function TabLayout() {
+const DrawerToggle = () => {
+  const navigation = useNavigation();
+  const colorScheme = useColorScheme();
+
+  const toggleDrawer = () => {
+    navigation.dispatch(DrawerActions.toggleDrawer());
+  };
+
+  return (
+    <TouchableOpacity onPress={toggleDrawer} style={{ marginLeft: 16 }}>
+      <Ionicons name="menu" size={28} color={Colors[colorScheme ?? 'light'].text} />
+    </TouchableOpacity>
+  );
+};
+
+export default function DrawerLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Tabs
+    <Drawer
+      drawerContent={(props: any) => <Sidebar {...props} />}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarStyle: {
-          paddingBottom: 5,
-          paddingTop: 5,
-          height: 60,
+        headerShown: true,
+        headerStyle: {
+          backgroundColor: Colors[colorScheme ?? 'light'].background,
         },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '500',
+        headerTintColor: Colors[colorScheme ?? 'light'].text,
+        drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        drawerLabelStyle: {
+          marginLeft: 10,
         },
+        drawerItemStyle: {
+          marginVertical: 6,
+          borderRadius: 8,
+        },
+        headerLeft: () => <DrawerToggle />,
       }}>
-      <Tabs.Screen
+      <Drawer.Screen
         name="index"
         options={{
+          drawerLabel: 'Beranda',
           title: 'Beranda',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          drawerIcon: ({ color, size }: { color: string; size: number }) => (
+            <Ionicons name="home-outline" size={size} color={color} />
+          ),
           headerShown: false,
         }}
       />
-      <Tabs.Screen
+      <Drawer.Screen
         name="profile"
         options={{
+          drawerLabel: 'Profil',
           title: 'Profil',
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-          headerShown: false,
+          drawerIcon: ({ color, size }: { color: string; size: number }) => (
+            <Ionicons name="person-outline" size={size} color={color} />
+          ),
+          headerShown: true,
         }}
       />
-    </Tabs>
+    </Drawer>
   );
 }
