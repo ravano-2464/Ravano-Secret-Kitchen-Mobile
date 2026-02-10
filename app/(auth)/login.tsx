@@ -57,7 +57,7 @@ export default function LoginScreen() {
                         </View>
 
                         <Text style={styles.title}>Selamat Datang</Text>
-                        <Text style={styles.subtitle}>Login untuk melanjutkan ke Rahasia Dapur</Text>
+                        <Text style={styles.subtitle}>Login untuk melanjutkan ke Ravano Secret Kitchen</Text>
 
                         {error ? (
                             <View style={styles.errorContainer}>

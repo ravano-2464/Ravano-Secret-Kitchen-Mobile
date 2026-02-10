@@ -154,7 +154,7 @@ export default function HomeScreen() {
                         <Ionicons name="restaurant" size={20} color="#fff" />
                     </View>
                     <View>
-                        <Text style={styles.navbarTitle}>Rahasia Dapur</Text>
+                        <Text style={styles.navbarTitle}>Ravano Secret Kitchen</Text>
                         <Text style={styles.navbarSubtitle}>
                             Selamat datang, <Text style={styles.navbarUserName}>{userName}</Text>
                         </Text>

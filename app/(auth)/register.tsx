@@ -58,7 +58,7 @@ export default function RegisterScreen() {
                             <Ionicons name="restaurant" size={28} color="#fff" />
                         </View>
 
-                        <Text style={styles.title}>Rahasia Dapur</Text>
+                        <Text style={styles.title}>Ravano Secret Kitchen</Text>
                         <Text style={styles.subtitle}>Daftar untuk mengakses ribuan resep masakan</Text>
 
                         {error ? (

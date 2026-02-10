@@ -1,10 +1,10 @@
-# 📱 Rahasia Dapur Mobile App
+# 📱 Ravano Secret Kitchen Mobile App
 
 ![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
 ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
-Aplikasi mobile **Rahasia Dapur** yang cantik dan responsif, dibangun dengan React Native dan Expo. Temukan ribuan resep masakan nusantara langsung dari genggaman Anda! 🍳🍲🍰
+Aplikasi mobile **Ravano Secret Kitchen** yang cantik dan responsif, dibangun dengan React Native dan Expo. Temukan ribuan resep masakan nusantara langsung dari genggaman Anda! 🍳🍲🍰
 
 ## ✨ Fitur Utama
 
@@ -115,4 +115,4 @@ Berikut adalah struktur folder utama aplikasi mobile:
 
 ---
 
-Dibuat dengan ❤️ oleh **Ravano Ganteng**
+**Dibuat dengan ❤️ oleh Ravano Akbar Widodo**
