@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, ActivityIndicator, TouchableOpacity, Platform } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import VideoPlayer from '../../components/VideoPlayer';
 import { Ionicons } from '@expo/vector-icons';
-import api from '../../services/api';
+import { useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import VideoPlayer from '../../components/VideoPlayer';
 import Colors from '../../constants/Colors';
+import api from '../../services/api';
 
 interface Recipe {
     id: string;
@@ -115,33 +115,35 @@ export default function RecipeDetailScreen() {
                 </View>
 
                 <View style={styles.tabContainer}>
-                    <TouchableOpacity
-                        style={[styles.tabButton, activeTab === 'ingredients' && styles.tabButtonActive]}
-                        onPress={() => setActiveTab('ingredients')}
-                        activeOpacity={0.7}
-                    >
-                        <Text style={[styles.tabText, activeTab === 'ingredients' && styles.tabTextActive]}>
-                            Bahan-bahan
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.tabButton, activeTab === 'instructions' && styles.tabButtonActive]}
-                        onPress={() => setActiveTab('instructions')}
-                        activeOpacity={0.7}
-                    >
-                        <Text style={[styles.tabText, activeTab === 'instructions' && styles.tabTextActive]}>
-                            Cara Membuat
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.tabButton, activeTab === 'video' && styles.tabButtonActive]}
-                        onPress={() => setActiveTab('video')}
-                        activeOpacity={0.7}
-                    >
-                        <Text style={[styles.tabText, activeTab === 'video' && styles.tabTextActive]}>
-                            Video Tutorial
-                        </Text>
-                    </TouchableOpacity>
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabScrollView}>
+                        <TouchableOpacity
+                            style={[styles.tabButton, activeTab === 'ingredients' && styles.tabButtonActive]}
+                            onPress={() => setActiveTab('ingredients')}
+                            activeOpacity={0.7}
+                        >
+                            <Text style={[styles.tabText, activeTab === 'ingredients' && styles.tabTextActive]}>
+                                Bahan-bahan
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.tabButton, activeTab === 'instructions' && styles.tabButtonActive]}
+                            onPress={() => setActiveTab('instructions')}
+                            activeOpacity={0.7}
+                        >
+                            <Text style={[styles.tabText, activeTab === 'instructions' && styles.tabTextActive]}>
+                                Cara Membuat
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.tabButton, activeTab === 'video' && styles.tabButtonActive]}
+                            onPress={() => setActiveTab('video')}
+                            activeOpacity={0.7}
+                        >
+                            <Text style={[styles.tabText, activeTab === 'video' && styles.tabTextActive]}>
+                                Video Tutorial
+                            </Text>
+                        </TouchableOpacity>
+                    </ScrollView>
                 </View>
 
                 {activeTab === 'ingredients' && (
@@ -305,7 +307,6 @@ const styles = StyleSheet.create({
 
 
     tabContainer: {
-        flexDirection: 'row',
         backgroundColor: '#f3f4f6',
         borderRadius: 25,
         padding: 4,
@@ -313,12 +314,18 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.light.border,
     },
+    tabScrollView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     tabButton: {
-        flex: 1,
         paddingVertical: 10,
-        paddingHorizontal: 8,
+        paddingHorizontal: 16,
         borderRadius: 25,
         alignItems: 'center',
+        marginRight: 8,
+        borderWidth: 1,
+        borderColor: 'transparent',
     },
     tabButtonActive: {
         backgroundColor: Colors.light.card,
