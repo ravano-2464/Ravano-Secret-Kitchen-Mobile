@@ -1,5 +1,5 @@
-import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import { useColorScheme } from '@/hooks/useColorScheme';
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerActions } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';

@@ -4,7 +4,9 @@ import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } 
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Toast from 'react-native-toast-message';
 import Colors from '../constants/Colors';
+import LogoutModal from './LogoutModal';
 import SearchDialogModal from './SearchDialogModal';
 
 export default function Sidebar(props: DrawerContentComponentProps) {
@@ -12,6 +14,7 @@ export default function Sidebar(props: DrawerContentComponentProps) {
     const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [logoutModalVisible, setLogoutModalVisible] = useState(false);
 
     useEffect(() => {
         loadUser();
@@ -33,6 +36,11 @@ export default function Sidebar(props: DrawerContentComponentProps) {
             await AsyncStorage.removeItem('user');
             await AsyncStorage.removeItem('token');
             router.replace('/(auth)/login');
+            Toast.show({
+                type: 'success',
+                text1: 'Berhasil Keluar',
+                text2: 'Sampai jumpa lagi!',
+            });
         } catch (e) {
             console.error(e);
         }
@@ -68,7 +76,7 @@ export default function Sidebar(props: DrawerContentComponentProps) {
                 </View>
 
                 <View style={styles.footer}>
-                    <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                    <TouchableOpacity style={styles.logoutButton} onPress={() => setLogoutModalVisible(true)}>
                         <Ionicons name="log-out-outline" size={24} color="#fff" />
                         <Text style={styles.logoutText}>Keluar</Text>
                     </TouchableOpacity>
@@ -78,6 +86,11 @@ export default function Sidebar(props: DrawerContentComponentProps) {
             <SearchDialogModal
                 visible={modalVisible}
                 onClose={() => setModalVisible(false)}
+            />
+            <LogoutModal
+                visible={logoutModalVisible}
+                onClose={() => setLogoutModalVisible(false)}
+                onConfirm={handleLogout}
             />
         </>
     );

@@ -7,10 +7,11 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import Toast from 'react-native-toast-message';
 
-import { useColorScheme } from '@/components/useColorScheme';
+import { toastConfig } from '@/components/CustomToast';
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 export {
-  ErrorBoundary,
+  ErrorBoundary
 } from 'expo-router';
 
 export const unstable_settings = {
@@ -62,7 +63,7 @@ function RootLayoutNav() {
         />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
-      <Toast visibilityTime={5000} />
+      <Toast config={toastConfig} visibilityTime={5000} />
     </ThemeProvider>
   );
 }

@@ -84,22 +84,25 @@ Berikut adalah struktur folder utama aplikasi mobile:
 ├── 📁 components
 │   ├── 📁 __tests__
 │   │   └── 📄 StyledText-test.js
+│   ├── 📄 CustomToast.tsx
 │   ├── 📄 EditScreenInfo.tsx
 │   ├── 📄 ExternalLink.tsx
 │   ├── 📄 HomeHeader.tsx
+│   ├── 📄 LogoutModal.tsx
 │   ├── 📄 RecipeCard.tsx
 │   ├── 📄 SearchDialogModal.tsx
 │   ├── 📄 Sidebar.tsx
 │   ├── 📄 StyledText.tsx
 │   ├── 📄 Themed.tsx
 │   ├── 📄 VideoPlayer.tsx
-│   ├── 📄 VideoPlayer.web.tsx
+│   └── 📄 VideoPlayer.web.tsx
+├── 📁 constants
+│   └── 📄 Colors.ts
+├── 📁 hooks
 │   ├── 📄 useClientOnlyValue.ts
 │   ├── 📄 useClientOnlyValue.web.ts
 │   ├── 📄 useColorScheme.ts
 │   └── 📄 useColorScheme.web.ts
-├── 📁 constants
-│   └── 📄 Colors.ts
 ├── 📁 services
 │   └── 📄 api.ts
 ├── 📁 types
