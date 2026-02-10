@@ -12,6 +12,7 @@ import api from '../../services/api';
 import { Recipe } from '../../types/Recipe';
 
 export default function HomeScreen() {
+    const navigation = useNavigation();
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
@@ -76,8 +77,6 @@ export default function HomeScreen() {
             </View>
         );
     }
-
-    const navigation = useNavigation();
 
     const toggleDrawer = () => {
         navigation.dispatch(DrawerActions.toggleDrawer());
