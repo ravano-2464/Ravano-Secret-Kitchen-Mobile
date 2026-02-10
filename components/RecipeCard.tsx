@@ -11,13 +11,30 @@ interface Recipe {
     time: string;
     difficulty: string;
     category: string;
+    description?: string;
+    servings?: string;
 }
 
 interface RecipeCardProps {
     recipe: Recipe;
 }
 
+const getDifficultyStyle = (difficulty: string) => {
+    switch (difficulty) {
+        case 'Mudah':
+            return { borderColor: '#10b981', color: '#059669', bg: '#ecfdf5' };
+        case 'Sedang':
+            return { borderColor: '#f59e0b', color: '#d97706', bg: '#fffbeb' };
+        case 'Sulit':
+            return { borderColor: '#ef4444', color: '#dc2626', bg: '#fef2f2' };
+        default:
+            return { borderColor: Colors.light.border, color: Colors.light.gray, bg: Colors.light.card };
+    }
+};
+
 export default function RecipeCard({ recipe }: RecipeCardProps) {
+    const diffStyle = getDifficultyStyle(recipe.difficulty);
+
     return (
         <Link href={`/recipe/${recipe.id}`} asChild>
             <TouchableOpacity style={styles.card} activeOpacity={0.9}>
@@ -27,18 +44,25 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
                         <View style={styles.badge}>
                             <Text style={styles.badgeText}>{recipe.category}</Text>
                         </View>
+                        <View style={[styles.difficultyBadge, { borderColor: diffStyle.borderColor, backgroundColor: diffStyle.bg }]}>
+                            <Text style={[styles.difficultyText, { color: diffStyle.color }]}>{recipe.difficulty}</Text>
+                        </View>
                     </View>
 
                     <Text style={styles.title} numberOfLines={2}>{recipe.title}</Text>
 
+                    {recipe.description ? (
+                        <Text style={styles.description} numberOfLines={2}>{recipe.description}</Text>
+                    ) : null}
+
                     <View style={styles.footer}>
                         <View style={styles.infoItem}>
-                            <Ionicons name="time-outline" size={16} color={Colors.light.gray} />
+                            <Ionicons name="time-outline" size={14} color={Colors.light.gray} />
                             <Text style={styles.infoText}>{recipe.time}</Text>
                         </View>
                         <View style={styles.infoItem}>
-                            <Ionicons name="bar-chart-outline" size={16} color={Colors.light.gray} />
-                            <Text style={styles.infoText}>{recipe.difficulty}</Text>
+                            <Ionicons name="people-outline" size={14} color={Colors.light.gray} />
+                            <Text style={styles.infoText}>{recipe.servings || '-'}</Text>
                         </View>
                     </View>
                 </View>
@@ -61,22 +85,24 @@ const styles = StyleSheet.create({
             },
             android: {
                 elevation: 4,
-                shadowColor: 'rgba(0,0,0,0.1)' // Android 9+
+                shadowColor: 'rgba(0,0,0,0.1)',
             },
         }),
         overflow: 'hidden',
     },
     image: {
         width: '100%',
-        height: 200, // Matched web 200px
+        height: 200,
         resizeMode: 'cover',
     },
     content: {
-        padding: 16, // 1rem approx
+        padding: 16,
     },
     badgeContainer: {
         flexDirection: 'row',
-        marginBottom: 8,
+        gap: 8,
+        flexWrap: 'wrap',
+        marginBottom: 10,
     },
     badge: {
         backgroundColor: Colors.light.primary,
@@ -87,19 +113,35 @@ const styles = StyleSheet.create({
     badgeText: {
         color: '#fff',
         fontSize: 12,
-        fontWeight: '600',
+        fontWeight: '500',
+    },
+    difficultyBadge: {
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 20,
+        borderWidth: 1,
+    },
+    difficultyText: {
+        fontSize: 12,
+        fontWeight: '500',
     },
     title: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 17,
+        fontWeight: '600',
         color: Colors.light.text,
-        marginBottom: 8,
-        lineHeight: 24,
+        marginBottom: 6,
+        lineHeight: 22,
+    },
+    description: {
+        fontSize: 14,
+        color: Colors.light.gray,
+        lineHeight: 20,
+        marginBottom: 10,
     },
     footer: {
         flexDirection: 'row',
         gap: 16,
-        marginTop: 8,
+        marginTop: 4,
     },
     infoItem: {
         flexDirection: 'row',

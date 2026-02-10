@@ -58,20 +58,39 @@ Berikut adalah struktur folder utama aplikasi mobile:
 mobile/
 ├── 📁 app/                 # Routing & Screen (Expo Router)
 │   ├── 📁 (auth)/          # Authentikasi (Login/Register)
+│   │   ├── _layout.tsx
+│   │   ├── login.tsx       # Halaman Login
+│   │   └── register.tsx    # Halaman Register
 │   ├── 📁 (tabs)/          # Navigasi Tab Utama
+│   │   ├── _layout.tsx
+│   │   └── index.tsx       # Halaman Utama (Home)
 │   ├── 📁 recipe/          # Halaman Detail Resep
+│   │   └── [id].tsx        # Dynamic Route untuk Detail Resep
 │   ├── _layout.tsx         # Layout Root
-│   └── +not-found.tsx      # Halaman 404
+│   ├── +html.tsx           # Entry point untuk Web
+│   ├── +not-found.tsx      # Halaman 404
+│   └── modal.tsx           # Layar Modal
 ├── 📁 assets/              # Gambar & Font
 ├── 📁 components/          # Komponen UI Reusable
-│   ├── RecipeCard.tsx      # Kartu Resep
-│   ├── Themed.tsx          # Komponen dengan Tema (Dark/Light)
-│   └── ...                 # Komponen lainnya
-├── 📁 constants/           # Konstanta Aplikasi (Warna, Layout)
+│   ├── __tests__/          # Testing
+│   ├── EditScreenInfo.tsx
+│   ├── ExternalLink.tsx
+│   ├── RecipeCard.tsx      # Komponen Kartu Resep
+│   ├── StyledText.tsx
+│   ├── Themed.tsx          # Komponen Tema (Light/Dark)
+│   ├── VideoPlayer.tsx     # Komponen Video Player
+│   └── ...                 # Hooks (useColorScheme, dll)
+├── 📁 constants/           # Konstanta Aplikasi
+│   └── Colors.ts           # Skema Warna
 ├── 📁 services/            # Logika API & Jaringan
 │   └── api.ts              # Konfigurasi Axios
-├── .env                    # Variabel Lingkungan
-└── package.json            # Dependensi Proyek
+├── 📁 types/               # Definisi Tipe Data
+│   └── Recipe.ts           # Interface Recipe
+├── .env                    # Variabel Lingkungan (API URL)
+├── app.json                # Konfigurasi Expo
+├── babel.config.js
+├── package.json            # Dependensi Proyek
+└── tsconfig.json           # Konfigurasi TypeScript
 ```
 
 ## �📸 Screenshots
