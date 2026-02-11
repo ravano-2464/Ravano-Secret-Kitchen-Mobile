@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import VideoPlayer from '../../components/VideoPlayer';
 import Colors from '../../constants/Colors';
+import { useColorScheme } from '../../hooks/useColorScheme';
 import api from '../../services/api';
 
 interface Recipe {
@@ -32,12 +33,15 @@ const getDifficultyStyle = (difficulty: string) => {
         case 'Sulit':
             return { borderColor: '#ef4444', color: '#dc2626', bg: '#fef2f2' };
         default:
-            return { borderColor: Colors.light.border, color: Colors.light.gray, bg: Colors.light.card };
+            return { borderColor: '#e5e7eb', color: '#6b7280', bg: '#ffffff' };
     }
 };
 
 export default function RecipeDetailScreen() {
     const { id } = useLocalSearchParams();
+    const colorScheme = useColorScheme();
+    const colors = Colors[colorScheme];
+
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<TabType>('ingredients');
@@ -61,16 +65,16 @@ export default function RecipeDetailScreen() {
 
     if (loading) {
         return (
-            <View style={styles.center}>
-                <ActivityIndicator size="large" color={Colors.light.primary} />
+            <View style={[styles.center, { backgroundColor: colors.background }]}>
+                <ActivityIndicator size="large" color={colors.primary} />
             </View>
         );
     }
 
     if (!recipe) {
         return (
-            <View style={styles.center}>
-                <Text style={styles.notFoundText}>Resep tidak ditemukan</Text>
+            <View style={[styles.center, { backgroundColor: colors.background }]}>
+                <Text style={[styles.notFoundText, { color: colors.gray }]}>Resep tidak ditemukan</Text>
             </View>
         );
     }
@@ -85,8 +89,8 @@ export default function RecipeDetailScreen() {
     const diffStyle = getDifficultyStyle(recipe.difficulty);
 
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            <View style={styles.imageContainer}>
+        <ScrollView style={[styles.container, { backgroundColor: colors.card }]} showsVerticalScrollIndicator={false}>
+            <View style={[styles.imageContainer, { backgroundColor: colors.background }]}>
                 {recipe.image && !imageError ? (
                     <Image
                         source={{ uri: recipe.image }}
@@ -94,16 +98,16 @@ export default function RecipeDetailScreen() {
                         onError={() => setImageError(true)}
                     />
                 ) : (
-                    <View style={[styles.image, styles.imagePlaceholder]}>
-                        <Ionicons name="image-outline" size={48} color={Colors.light.gray} />
-                        <Text style={styles.imagePlaceholderText}>Foto tidak tersedia</Text>
+                    <View style={[styles.image, styles.imagePlaceholder, { backgroundColor: colors.border, borderColor: colors.border }]}>
+                        <Ionicons name="image-outline" size={48} color={colors.gray} />
+                        <Text style={[styles.imagePlaceholderText, { color: colors.gray }]}>Foto tidak tersedia</Text>
                     </View>
                 )}
             </View>
 
-            <View style={styles.content}>
+            <View style={[styles.content, { backgroundColor: colorScheme === 'dark' ? colors.card : '#fef3ee' }]}>
                 <View style={styles.badges}>
-                    <View style={styles.categoryBadge}>
+                    <View style={[styles.categoryBadge, { backgroundColor: colors.primary }]}>
                         <Text style={styles.categoryBadgeText}>{recipe.category}</Text>
                     </View>
                     <View style={[styles.difficultyBadge, { borderColor: diffStyle.borderColor, backgroundColor: diffStyle.bg }]}>
@@ -111,47 +115,47 @@ export default function RecipeDetailScreen() {
                     </View>
                 </View>
 
-                <Text style={styles.title}>{recipe.title}</Text>
+                <Text style={[styles.title, { color: colors.text }]}>{recipe.title}</Text>
 
-                <Text style={styles.description}>{recipe.description}</Text>
+                <Text style={[styles.description, { color: colors.gray }]}>{recipe.description}</Text>
 
                 <View style={styles.metaContainer}>
                     <View style={styles.metaItem}>
-                        <Ionicons name="time-outline" size={16} color={Colors.light.gray} />
-                        <Text style={styles.metaText}>{recipe.time}</Text>
+                        <Ionicons name="time-outline" size={16} color={colors.gray} />
+                        <Text style={[styles.metaText, { color: colors.gray }]}>{recipe.time}</Text>
                     </View>
                     <View style={styles.metaItem}>
-                        <Ionicons name="people-outline" size={16} color={Colors.light.gray} />
-                        <Text style={styles.metaText}>{recipe.servings}</Text>
+                        <Ionicons name="people-outline" size={16} color={colors.gray} />
+                        <Text style={[styles.metaText, { color: colors.gray }]}>{recipe.servings}</Text>
                     </View>
                 </View>
 
-                <View style={styles.tabContainer}>
+                <View style={[styles.tabContainer, { backgroundColor: colorScheme === 'dark' ? colors.background : '#f3f4f6', borderColor: colors.border }]}>
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabScrollView}>
                         <TouchableOpacity
-                            style={[styles.tabButton, activeTab === 'ingredients' && styles.tabButtonActive]}
+                            style={[styles.tabButton, activeTab === 'ingredients' && [styles.tabButtonActive, { backgroundColor: colors.card, borderColor: colors.border }]]}
                             onPress={() => setActiveTab('ingredients')}
                             activeOpacity={0.7}
                         >
-                            <Text style={[styles.tabText, activeTab === 'ingredients' && styles.tabTextActive]}>
+                            <Text style={[styles.tabText, { color: colors.gray }, activeTab === 'ingredients' && { color: colors.text }]}>
                                 Bahan-bahan
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[styles.tabButton, activeTab === 'instructions' && styles.tabButtonActive]}
+                            style={[styles.tabButton, activeTab === 'instructions' && [styles.tabButtonActive, { backgroundColor: colors.card, borderColor: colors.border }]]}
                             onPress={() => setActiveTab('instructions')}
                             activeOpacity={0.7}
                         >
-                            <Text style={[styles.tabText, activeTab === 'instructions' && styles.tabTextActive]}>
+                            <Text style={[styles.tabText, { color: colors.gray }, activeTab === 'instructions' && { color: colors.text }]}>
                                 Cara Membuat
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[styles.tabButton, activeTab === 'video' && styles.tabButtonActive]}
+                            style={[styles.tabButton, activeTab === 'video' && [styles.tabButtonActive, { backgroundColor: colors.card, borderColor: colors.border }]]}
                             onPress={() => setActiveTab('video')}
                             activeOpacity={0.7}
                         >
-                            <Text style={[styles.tabText, activeTab === 'video' && styles.tabTextActive]}>
+                            <Text style={[styles.tabText, { color: colors.gray }, activeTab === 'video' && { color: colors.text }]}>
                                 Video Tutorial
                             </Text>
                         </TouchableOpacity>
@@ -159,50 +163,50 @@ export default function RecipeDetailScreen() {
                 </View>
 
                 {activeTab === 'ingredients' && (
-                    <View style={styles.sectionCard}>
+                    <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <View style={styles.sectionTitleRow}>
-                            <Ionicons name="restaurant" size={20} color={Colors.light.primary} />
-                            <Text style={styles.sectionTitle}>Bahan-bahan</Text>
+                            <Ionicons name="restaurant" size={20} color={colors.primary} />
+                            <Text style={[styles.sectionTitle, { color: colors.text }]}>Bahan-bahan</Text>
                         </View>
                         {(recipe.ingredients || []).map((ingredient, index) => (
                             <View key={index} style={styles.listItem}>
-                                <View style={styles.bullet} />
-                                <Text style={styles.listText}>{ingredient}</Text>
+                                <View style={[styles.bullet, { backgroundColor: colors.primary }]} />
+                                <Text style={[styles.listText, { color: colors.text }]}>{ingredient}</Text>
                             </View>
                         ))}
                     </View>
                 )}
 
                 {activeTab === 'instructions' && (
-                    <View style={styles.sectionCard}>
+                    <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <View style={styles.sectionTitleRow}>
-                            <Ionicons name="restaurant" size={20} color={Colors.light.primary} />
-                            <Text style={styles.sectionTitle}>Langkah-langkah</Text>
+                            <Ionicons name="restaurant" size={20} color={colors.primary} />
+                            <Text style={[styles.sectionTitle, { color: colors.text }]}>Langkah-langkah</Text>
                         </View>
                         {(recipe.steps || []).map((step, index) => (
                             <View key={index} style={styles.stepItem}>
-                                <View style={styles.stepNumber}>
+                                <View style={[styles.stepNumber, { backgroundColor: colors.primary }]}>
                                     <Text style={styles.stepNumberText}>{index + 1}</Text>
                                 </View>
-                                <Text style={styles.stepText}>{step}</Text>
+                                <Text style={[styles.stepText, { color: colors.text }]}>{step}</Text>
                             </View>
                         ))}
                     </View>
                 )}
 
                 {activeTab === 'video' && (
-                    <View style={styles.sectionCard}>
+                    <View style={[styles.sectionCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
                         <View style={styles.sectionTitleRow}>
-                            <Ionicons name="play-circle" size={20} color={Colors.light.primary} />
-                            <Text style={styles.sectionTitle}>Video Tutorial</Text>
+                            <Ionicons name="play-circle" size={20} color={colors.primary} />
+                            <Text style={[styles.sectionTitle, { color: colors.text }]}>Video Tutorial</Text>
                         </View>
                         {videoId ? (
                             <VideoPlayer videoId={videoId} />
                         ) : (
-                            <View style={styles.videoPlaceholderContainer}>
-                                <Ionicons name="videocam-off-outline" size={48} color={Colors.light.gray} />
-                                <Text style={styles.videoPlaceholderTitle}>Video Tidak Tersedia</Text>
-                                <Text style={styles.videoPlaceholderText}>
+                            <View style={[styles.videoPlaceholderContainer, { backgroundColor: colorScheme === 'dark' ? colors.background : '#f9fafb', borderColor: colors.border }]}>
+                                <Ionicons name="videocam-off-outline" size={48} color={colors.gray} />
+                                <Text style={[styles.videoPlaceholderTitle, { color: colors.text }]}>Video Tidak Tersedia</Text>
+                                <Text style={[styles.videoPlaceholderText, { color: colors.gray }]}>
                                     Video tutorial belum tersedia untuk resep ini
                                 </Text>
                             </View>
@@ -211,44 +215,40 @@ export default function RecipeDetailScreen() {
                 )}
 
                 {recipe.tips && recipe.tips.length > 0 && (
-                    <View style={styles.tipsCard}>
+                    <View style={[styles.tipsCard, { backgroundColor: colorScheme === 'dark' ? '#3b2a1a' : '#fef7ed', borderColor: colorScheme === 'dark' ? '#7c5a30' : '#fed7aa' }]}>
                         <View style={styles.sectionTitleRow}>
-                            <Ionicons name="bulb" size={18} color={Colors.light.primary} />
-                            <Text style={styles.tipsTitle}>Tips & Trik</Text>
+                            <Ionicons name="bulb" size={18} color={colors.primary} />
+                            <Text style={[styles.tipsTitle, { color: colors.primary }]}>Tips & Trik</Text>
                         </View>
                         {recipe.tips.map((tip, index) => (
                             <View key={index} style={styles.tipItem}>
-                                <View style={styles.tipBullet} />
-                                <Text style={styles.tipText}>{tip}</Text>
+                                <View style={[styles.tipBullet, { backgroundColor: colors.primary }]} />
+                                <Text style={[styles.tipText, { color: colorScheme === 'dark' ? '#fdba74' : '#c2410c' }]}>{tip}</Text>
                             </View>
                         ))}
                     </View>
                 )}
             </View>
-        </ScrollView >
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.light.card,
     },
     center: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.light.background,
     },
     notFoundText: {
-        color: Colors.light.gray,
         fontSize: 16,
     },
 
     imageContainer: {
         width: '100%',
         alignItems: 'center',
-        backgroundColor: Colors.light.background,
         paddingTop: 16,
     },
     image: {
@@ -258,15 +258,12 @@ const styles = StyleSheet.create({
         borderRadius: 16,
     },
     imagePlaceholder: {
-        backgroundColor: '#f3f4f6',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: Colors.light.border,
         borderStyle: 'dashed',
     },
     imagePlaceholderText: {
-        color: Colors.light.gray,
         fontSize: 14,
         marginTop: 8,
     },
@@ -274,7 +271,6 @@ const styles = StyleSheet.create({
     content: {
         padding: 20,
         marginTop: -16,
-        backgroundColor: '#fef3ee',
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
     },
@@ -285,7 +281,6 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     categoryBadge: {
-        backgroundColor: Colors.light.primary,
         paddingHorizontal: 12,
         paddingVertical: 4,
         borderRadius: 20,
@@ -309,12 +304,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: '700',
-        color: Colors.light.text,
         marginBottom: 10,
     },
     description: {
         fontSize: 15,
-        color: Colors.light.gray,
         lineHeight: 24,
         marginBottom: 16,
     },
@@ -330,18 +323,14 @@ const styles = StyleSheet.create({
         gap: 6,
     },
     metaText: {
-        color: Colors.light.gray,
         fontSize: 14,
     },
 
-
     tabContainer: {
-        backgroundColor: '#f3f4f6',
         borderRadius: 25,
         padding: 4,
         marginBottom: 16,
         borderWidth: 1,
-        borderColor: Colors.light.border,
     },
     tabScrollView: {
         flexDirection: 'row',
@@ -357,26 +346,18 @@ const styles = StyleSheet.create({
         borderColor: 'transparent',
     },
     tabButtonActive: {
-        backgroundColor: Colors.light.card,
         borderWidth: 1,
-        borderColor: Colors.light.border,
     },
     tabText: {
         fontSize: 13,
         fontWeight: '500',
-        color: Colors.light.gray,
-    },
-    tabTextActive: {
-        color: Colors.light.text,
     },
 
     sectionCard: {
-        backgroundColor: Colors.light.card,
         borderRadius: 12,
         padding: 20,
         marginBottom: 12,
         borderWidth: 1,
-        borderColor: '#f3f4f6',
     },
     sectionTitleRow: {
         flexDirection: 'row',
@@ -387,7 +368,6 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.light.text,
     },
 
     listItem: {
@@ -399,13 +379,11 @@ const styles = StyleSheet.create({
         width: 6,
         height: 6,
         borderRadius: 3,
-        backgroundColor: Colors.light.primary,
         marginRight: 12,
         marginTop: 7,
     },
     listText: {
         fontSize: 15,
-        color: Colors.light.text,
         lineHeight: 22,
         flex: 1,
     },
@@ -418,7 +396,6 @@ const styles = StyleSheet.create({
         width: 28,
         height: 28,
         borderRadius: 14,
-        backgroundColor: Colors.light.primary,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 12,
@@ -431,46 +408,37 @@ const styles = StyleSheet.create({
     },
     stepText: {
         fontSize: 15,
-        color: Colors.light.text,
         lineHeight: 24,
         flex: 1,
     },
 
-
     videoPlaceholderContainer: {
         alignItems: 'center',
         paddingVertical: 32,
-        backgroundColor: '#f9fafb',
         borderRadius: 12,
         borderWidth: 1,
-        borderColor: Colors.light.border,
         borderStyle: 'dashed',
     },
     videoPlaceholderTitle: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.light.text,
         marginTop: 12,
     },
     videoPlaceholderText: {
         textAlign: 'center',
-        color: Colors.light.gray,
         fontSize: 13,
         marginTop: 4,
     },
 
     tipsCard: {
-        backgroundColor: '#fef7ed',
         borderRadius: 12,
         padding: 20,
         marginTop: 12,
         borderWidth: 1,
-        borderColor: '#fed7aa',
     },
     tipsTitle: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.light.primary,
     },
     tipItem: {
         flexDirection: 'row',
@@ -481,13 +449,11 @@ const styles = StyleSheet.create({
         width: 6,
         height: 6,
         borderRadius: 3,
-        backgroundColor: Colors.light.primary,
         marginRight: 12,
         marginTop: 7,
     },
     tipText: {
         fontSize: 14,
-        color: '#c2410c',
         lineHeight: 22,
         flex: 1,
     },

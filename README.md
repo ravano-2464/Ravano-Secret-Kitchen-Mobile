@@ -91,6 +91,7 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │   ├── 📄 LogoutModal.tsx
 │   ├── 📄 RecipeCard.tsx
 │   ├── 📄 SearchDialogModal.tsx
+│   ├── 📄 SettingsModal.tsx
 │   ├── 📄 Sidebar.tsx
 │   ├── 📄 StyledText.tsx
 │   ├── 📄 Themed.tsx
@@ -98,6 +99,8 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │   └── 📄 VideoPlayer.web.tsx
 ├── 📁 constants
 │   └── 📄 Colors.ts
+├── 📁 context
+│   └── 📄 ThemeContext.tsx
 ├── 📁 hooks
 │   ├── 📄 useClientOnlyValue.ts
 │   ├── 📄 useClientOnlyValue.web.ts

@@ -10,9 +10,13 @@ import SearchDialogModal from '../../components/SearchDialogModal';
 import Colors from '../../constants/Colors';
 import api from '../../services/api';
 import { Recipe } from '../../types/Recipe';
+import { useColorScheme } from '../../hooks/useColorScheme';
 
 export default function HomeScreen() {
     const navigation = useNavigation();
+    const colorScheme = useColorScheme();
+    const colors = Colors[colorScheme];
+
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
@@ -72,8 +76,8 @@ export default function HomeScreen() {
 
     if (loading) {
         return (
-            <View style={styles.center}>
-                <ActivityIndicator size="large" color={Colors.light.primary} />
+            <View style={[styles.center, { backgroundColor: colors.background }]}>
+                <ActivityIndicator size="large" color={colors.primary} />
             </View>
         );
     }
@@ -83,21 +87,21 @@ export default function HomeScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container} edges={['top']}>
-            <StatusBar barStyle="dark-content" backgroundColor={Colors.light.card} />
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+            <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor={colors.card} />
 
-            <View style={styles.navbar}>
+            <View style={[styles.navbar, { backgroundColor: colors.card, borderBottomColor: colors.border }]}>
                 <View style={styles.navbarBrand}>
                     <TouchableOpacity onPress={toggleDrawer} style={{ marginRight: 12 }}>
-                        <Ionicons name="menu" size={28} color={Colors.light.text} />
+                        <Ionicons name="menu" size={28} color={colors.text} />
                     </TouchableOpacity>
-                    <View style={styles.navbarLogo}>
+                    <View style={[styles.navbarLogo, { backgroundColor: colors.primary }]}>
                         <Ionicons name="restaurant" size={20} color="#fff" />
                     </View>
                     <View>
-                        <Text style={styles.navbarTitle}>Ravano Secret Kitchen</Text>
-                        <Text style={styles.navbarSubtitle}>
-                            Selamat datang, <Text style={styles.navbarUserName}>{userName}</Text>
+                        <Text style={[styles.navbarTitle, { color: colors.text }]}>Ravano Secret Kitchen</Text>
+                        <Text style={[styles.navbarSubtitle, { color: colors.gray }]}>
+                            Selamat datang, <Text style={[styles.navbarUserName, { color: colors.primary }]}>{userName}</Text>
                         </Text>
                     </View>
                 </View>
@@ -120,11 +124,11 @@ export default function HomeScreen() {
                     />
                 }
                 refreshControl={
-                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[Colors.light.primary]} />
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[colors.primary]} />
                 }
                 ListEmptyComponent={
                     <View style={styles.noResults}>
-                        <Text style={styles.emptyText}>Tidak ada resep yang ditemukan</Text>
+                        <Text style={[styles.emptyText, { color: colors.gray }]}>Tidak ada resep yang ditemukan</Text>
                     </View>
                 }
                 showsVerticalScrollIndicator={false}
@@ -141,13 +145,11 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.light.background,
     },
     center: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: Colors.light.background,
     },
 
     navbar: {
@@ -156,9 +158,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
         paddingVertical: 12,
-        backgroundColor: Colors.light.card,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.light.border,
     },
     navbarBrand: {
         flexDirection: 'row',
@@ -169,36 +169,18 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        backgroundColor: Colors.light.primary,
         justifyContent: 'center',
         alignItems: 'center',
     },
     navbarTitle: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.light.text,
     },
     navbarSubtitle: {
         fontSize: 12,
-        color: Colors.light.gray,
     },
     navbarUserName: {
-        color: Colors.light.primary,
         fontWeight: '600',
-    },
-    logoutButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 6,
-        paddingHorizontal: 12,
-        paddingVertical: 8,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: Colors.light.border,
-    },
-    logoutText: {
-        fontSize: 14,
-        color: Colors.light.gray,
     },
 
     listContent: {
@@ -211,6 +193,5 @@ const styles = StyleSheet.create({
     },
     emptyText: {
         textAlign: 'center',
-        color: Colors.light.gray,
     },
 });

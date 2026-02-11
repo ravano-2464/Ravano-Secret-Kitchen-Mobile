@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Colors from '../constants/Colors';
+import { useColorScheme } from '../hooks/useColorScheme';
 
 interface LogoutModalProps {
     visible: boolean;
@@ -9,6 +10,9 @@ interface LogoutModalProps {
 }
 
 export default function LogoutModal({ visible, onClose, onConfirm }: LogoutModalProps) {
+    const colorScheme = useColorScheme();
+    const colors = Colors[colorScheme];
+
     return (
         <Modal
             visible={visible}
@@ -17,20 +21,20 @@ export default function LogoutModal({ visible, onClose, onConfirm }: LogoutModal
             onRequestClose={onClose}
         >
             <View style={styles.modalOverlay}>
-                <View style={styles.modalContent}>
-                    <Text style={styles.title}>Konfirmasi Keluar</Text>
-                    <Text style={styles.message}>Apakah Anda yakin ingin keluar dari aplikasi?</Text>
+                <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
+                    <Text style={[styles.title, { color: colors.text }]}>Konfirmasi Keluar</Text>
+                    <Text style={[styles.message, { color: colors.gray }]}>Apakah Anda yakin ingin keluar dari aplikasi?</Text>
 
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
-                            style={[styles.button, styles.cancelButton]}
+                            style={[styles.button, { backgroundColor: colors.border }]}
                             onPress={onClose}
                         >
-                            <Text style={styles.cancelButtonText}>Batal</Text>
+                            <Text style={[styles.cancelButtonText, { color: colors.text }]}>Batal</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={[styles.button, styles.confirmButton]}
+                            style={[styles.button, { backgroundColor: colors.primary }]}
                             onPress={onConfirm}
                         >
                             <Text style={styles.confirmButtonText}>Keluar</Text>
@@ -51,7 +55,6 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     modalContent: {
-        backgroundColor: '#fff',
         borderRadius: 16,
         padding: 24,
         width: '100%',
@@ -69,12 +72,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: Colors.light.text,
         marginBottom: 12,
     },
     message: {
         fontSize: 14,
-        color: Colors.light.gray,
         textAlign: 'center',
         marginBottom: 24,
     },
@@ -90,16 +91,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    cancelButton: {
-        backgroundColor: '#f3f4f6',
-    },
     cancelButtonText: {
-        color: Colors.light.text,
         fontWeight: '600',
         fontSize: 14,
-    },
-    confirmButton: {
-        backgroundColor: Colors.light.primary,
     },
     confirmButtonText: {
         color: '#fff',

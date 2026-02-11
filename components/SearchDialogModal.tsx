@@ -5,6 +5,7 @@ import { ActivityIndicator, FlatList, Image, Modal, StyleSheet, Text, TextInput,
 import Colors from '../constants/Colors';
 import api from '../services/api';
 import { Recipe } from '../types/Recipe';
+import { useColorScheme } from '../hooks/useColorScheme';
 
 interface SearchDialogModalProps {
     visible: boolean;
@@ -13,6 +14,9 @@ interface SearchDialogModalProps {
 
 export default function SearchDialogModal({ visible, onClose }: SearchDialogModalProps) {
     const router = useRouter();
+    const colorScheme = useColorScheme();
+    const colors = Colors[colorScheme];
+
     const [searchQuery, setSearchQuery] = useState('');
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [loadingRecipes, setLoadingRecipes] = useState(false);
@@ -46,21 +50,21 @@ export default function SearchDialogModal({ visible, onClose }: SearchDialogModa
 
     const renderRecipeItem = ({ item }: { item: Recipe }) => (
         <TouchableOpacity
-            style={styles.recipeItem}
+            style={[styles.recipeItem, { backgroundColor: colors.card, borderColor: colors.border }]}
             onPress={() => handleRecipePress(item.id)}
         >
             <Image source={{ uri: item.image }} style={styles.recipeImage} />
             <View style={styles.recipeInfo}>
-                <Text style={styles.recipeCategory}>{item.category}</Text>
-                <Text style={styles.recipeTitle}>{item.title}</Text>
+                <Text style={[styles.recipeCategory, { color: colors.primary }]}>{item.category}</Text>
+                <Text style={[styles.recipeTitle, { color: colors.text }]}>{item.title}</Text>
                 <View style={styles.recipeMeta}>
-                    <Ionicons name="time-outline" size={14} color={Colors.light.gray} />
-                    <Text style={styles.metaText}>{item.time}</Text>
-                    <Ionicons name="people-outline" size={14} color={Colors.light.gray} style={{ marginLeft: 8 }} />
-                    <Text style={styles.metaText}>{item.servings}</Text>
+                    <Ionicons name="time-outline" size={14} color={colors.gray} />
+                    <Text style={[styles.metaText, { color: colors.gray }]}>{item.time}</Text>
+                    <Ionicons name="people-outline" size={14} color={colors.gray} style={{ marginLeft: 8 }} />
+                    <Text style={[styles.metaText, { color: colors.gray }]}>{item.servings}</Text>
                 </View>
             </View>
-            <Ionicons name="chevron-forward" size={20} color={Colors.light.gray} />
+            <Ionicons name="chevron-forward" size={20} color={colors.gray} />
         </TouchableOpacity>
     );
 
@@ -70,24 +74,24 @@ export default function SearchDialogModal({ visible, onClose }: SearchDialogModa
             animationType="slide"
             onRequestClose={onClose}
         >
-            <View style={styles.modalContainer}>
-                <View style={styles.modalHeader}>
+            <View style={[styles.modalContainer, { backgroundColor: colors.background }]}>
+                <View style={[styles.modalHeader, { borderBottomColor: colors.border }]}>
                     <TouchableOpacity onPress={onClose} style={styles.backButton}>
-                        <Ionicons name="arrow-back" size={24} color={Colors.light.text} />
+                        <Ionicons name="arrow-back" size={24} color={colors.text} />
                     </TouchableOpacity>
-                    <View style={styles.searchInputContainer}>
-                        <Ionicons name="search" size={20} color={Colors.light.gray} />
+                    <View style={[styles.searchInputContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                        <Ionicons name="search" size={20} color={colors.gray} />
                         <TextInput
-                            style={styles.searchInput}
+                            style={[styles.searchInput, { color: colors.text }]}
                             placeholder="Cari resep..."
                             value={searchQuery}
                             onChangeText={setSearchQuery}
                             autoFocus
-                            placeholderTextColor={Colors.light.gray}
+                            placeholderTextColor={colors.gray}
                         />
                         {searchQuery.length > 0 && (
                             <TouchableOpacity onPress={() => setSearchQuery('')}>
-                                <Ionicons name="close-circle" size={18} color={Colors.light.gray} />
+                                <Ionicons name="close-circle" size={18} color={colors.gray} />
                             </TouchableOpacity>
                         )}
                     </View>
@@ -95,7 +99,7 @@ export default function SearchDialogModal({ visible, onClose }: SearchDialogModa
 
                 {loadingRecipes ? (
                     <View style={styles.loadingContainer}>
-                        <ActivityIndicator size="large" color={Colors.light.primary} />
+                        <ActivityIndicator size="large" color={colors.primary} />
                     </View>
                 ) : (
                     <FlatList
@@ -106,7 +110,7 @@ export default function SearchDialogModal({ visible, onClose }: SearchDialogModa
                         keyboardShouldPersistTaps="handled"
                         ListEmptyComponent={
                             <View style={styles.emptyContainer}>
-                                <Text style={styles.emptyText}>
+                                <Text style={[styles.emptyText, { color: colors.gray }]}>
                                     {searchQuery ? 'Tidak ada resep ditemukan' : 'Belum ada resep'}
                                 </Text>
                             </View>
@@ -121,14 +125,12 @@ export default function SearchDialogModal({ visible, onClose }: SearchDialogModa
 const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
-        backgroundColor: Colors.light.background,
     },
     modalHeader: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 16,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.light.border,
         gap: 12,
     },
     backButton: {
@@ -138,18 +140,15 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.light.card,
         borderRadius: 8,
         paddingHorizontal: 12,
         height: 40,
         borderWidth: 1,
-        borderColor: Colors.light.border,
     },
     searchInput: {
         flex: 1,
         marginLeft: 8,
         fontSize: 16,
-        color: Colors.light.text,
     },
     listContent: {
         padding: 16,
@@ -158,11 +157,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 12,
-        backgroundColor: Colors.light.card,
         borderRadius: 12,
         marginBottom: 12,
         borderWidth: 1,
-        borderColor: Colors.light.border,
     },
     recipeImage: {
         width: 60,
@@ -177,12 +174,10 @@ const styles = StyleSheet.create({
     recipeTitle: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.light.text,
         marginBottom: 4,
     },
     recipeCategory: {
         fontSize: 12,
-        color: Colors.light.primary,
         marginBottom: 2,
     },
     recipeMeta: {
@@ -192,7 +187,6 @@ const styles = StyleSheet.create({
     },
     metaText: {
         fontSize: 12,
-        color: Colors.light.gray,
     },
     loadingContainer: {
         flex: 1,
@@ -204,7 +198,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     emptyText: {
-        color: Colors.light.gray,
         fontSize: 14,
     },
 });

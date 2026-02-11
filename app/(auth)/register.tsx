@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useRouter, Link } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../../services/api';
 import Colors from '../../constants/Colors';
 import Toast from 'react-native-toast-message';
+import { useColorScheme } from '../../hooks/useColorScheme';
 
 export default function RegisterScreen() {
     const router = useRouter();
+    const colorScheme = useColorScheme();
+    const colors = Colors[colorScheme];
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -47,70 +51,70 @@ export default function RegisterScreen() {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.keyboardView}
             >
                 <ScrollView contentContainerStyle={styles.scrollContent}>
-                    <View style={styles.card}>
-                        <View style={styles.logoContainer}>
+                    <View style={[styles.card, { backgroundColor: colors.card }]}>
+                        <View style={[styles.logoContainer, { backgroundColor: colors.primary }]}>
                             <Ionicons name="restaurant" size={28} color="#fff" />
                         </View>
 
-                        <Text style={styles.title}>Ravano Secret Kitchen</Text>
-                        <Text style={styles.subtitle}>Daftar untuk mengakses ribuan resep masakan</Text>
+                        <Text style={[styles.title, { color: colors.text }]}>Ravano Secret Kitchen</Text>
+                        <Text style={[styles.subtitle, { color: colors.gray }]}>Daftar untuk mengakses ribuan resep masakan</Text>
 
                         {error ? (
-                            <View style={styles.errorContainer}>
-                                <Text style={styles.errorText}>{error}</Text>
+                            <View style={[styles.errorContainer, { backgroundColor: colorScheme === 'dark' ? '#451a1a' : '#fef2f2' }]}>
+                                <Text style={[styles.errorText, { color: colors.error }]}>{error}</Text>
                             </View>
                         ) : null}
 
                         <View style={styles.inputContainer}>
-                            <Text style={styles.label}>Nama Lengkap</Text>
+                            <Text style={[styles.label, { color: colors.text }]}>Nama Lengkap</Text>
                             <TextInput
-                                style={styles.input}
-                                placeholder="Ibu Siti"
+                                style={[styles.input, { backgroundColor: colors.card, borderColor: colors.border, color: colors.text }]}
+                                placeholder="Masukkan nama lengkap anda"
                                 value={name}
                                 onChangeText={setName}
-                                placeholderTextColor={Colors.light.gray}
+                                placeholderTextColor={colors.gray}
                             />
 
-                            <Text style={styles.label}>Email</Text>
+                            <Text style={[styles.label, { color: colors.text }]}>Email</Text>
                             <TextInput
-                                style={styles.input}
-                                placeholder="ibu.siti@email.com"
+                                style={[styles.input, { backgroundColor: colors.card, borderColor: colors.border, color: colors.text }]}
+                                placeholder="Masukkan email anda"
                                 value={email}
                                 onChangeText={setEmail}
                                 autoCapitalize="none"
                                 keyboardType="email-address"
-                                placeholderTextColor={Colors.light.gray}
+                                placeholderTextColor={colors.gray}
                             />
 
-                            <Text style={styles.label}>Password</Text>
+                            <Text style={[styles.label, { color: colors.text }]}>Password</Text>
                             <TextInput
-                                style={styles.input}
+                                style={[styles.input, { backgroundColor: colors.card, borderColor: colors.border, color: colors.text }]}
                                 placeholder="Minimal 6 karakter"
                                 value={password}
                                 onChangeText={setPassword}
                                 secureTextEntry
-                                placeholderTextColor={Colors.light.gray}
+                                placeholderTextColor={colors.gray}
                             />
 
-                            <Text style={styles.label}>Konfirmasi Password</Text>
+                            <Text style={[styles.label, { color: colors.text }]}>Konfirmasi Password</Text>
                             <TextInput
-                                style={styles.input}
+                                style={[styles.input, { backgroundColor: colors.card, borderColor: colors.border, color: colors.text }]}
                                 placeholder="Ulangi password"
                                 value={confirmPassword}
                                 onChangeText={setConfirmPassword}
                                 secureTextEntry
-                                placeholderTextColor={Colors.light.gray}
+                                placeholderTextColor={colors.gray}
                             />
                         </View>
 
                         <TouchableOpacity
-                            style={[styles.button, loading && styles.buttonDisabled]}
+                            style={[styles.button, { backgroundColor: colors.primary }, loading && styles.buttonDisabled]}
                             onPress={handleRegister}
                             disabled={loading}
                             activeOpacity={0.8}
@@ -123,10 +127,10 @@ export default function RegisterScreen() {
                         </TouchableOpacity>
 
                         <View style={styles.footer}>
-                            <Text style={styles.footerText}>Sudah punya akun? </Text>
+                            <Text style={[styles.footerText, { color: colors.gray }]}>Sudah punya akun? </Text>
                             <Link href="/(auth)/login" asChild>
                                 <TouchableOpacity>
-                                    <Text style={styles.linkText}>Login di sini</Text>
+                                    <Text style={[styles.linkText, { color: colors.primary }]}>Login di sini</Text>
                                 </TouchableOpacity>
                             </Link>
                         </View>
@@ -140,7 +144,6 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.light.background,
     },
     keyboardView: {
         flex: 1,
@@ -151,7 +154,6 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     card: {
-        backgroundColor: Colors.light.card,
         borderRadius: 16,
         padding: 24,
         ...Platform.select({
@@ -172,7 +174,6 @@ const styles = StyleSheet.create({
         width: 56,
         height: 56,
         borderRadius: 28,
-        backgroundColor: Colors.light.primary,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
@@ -180,24 +181,20 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: '600',
-        color: Colors.light.text,
         marginBottom: 8,
     },
     subtitle: {
         fontSize: 14,
-        color: Colors.light.gray,
         marginBottom: 24,
         textAlign: 'center',
     },
     errorContainer: {
-        backgroundColor: '#fef2f2',
         padding: 12,
         borderRadius: 8,
         width: '100%',
         marginBottom: 12,
     },
     errorText: {
-        color: '#dc2626',
         fontSize: 14,
         textAlign: 'center',
     },
@@ -208,22 +205,17 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 14,
         fontWeight: '500',
-        color: Colors.light.text,
         marginBottom: 8,
         marginTop: 16,
     },
     input: {
-        backgroundColor: Colors.light.card,
         borderRadius: 8,
         padding: 12,
         paddingHorizontal: 16,
         fontSize: 15,
         borderWidth: 1,
-        borderColor: Colors.light.border,
-        color: Colors.light.text,
     },
     button: {
-        backgroundColor: Colors.light.primary,
         padding: 14,
         borderRadius: 8,
         alignItems: 'center',
@@ -244,11 +236,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     footerText: {
-        color: Colors.light.gray,
         fontSize: 14,
     },
     linkText: {
-        color: Colors.light.primary,
         fontWeight: '500',
         fontSize: 14,
     },
