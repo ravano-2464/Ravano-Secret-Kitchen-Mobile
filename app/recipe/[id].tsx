@@ -41,6 +41,7 @@ export default function RecipeDetailScreen() {
     const [recipe, setRecipe] = useState<Recipe | null>(null);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<TabType>('ingredients');
+    const [imageError, setImageError] = useState(false);
 
     useEffect(() => {
         const fetchRecipe = async () => {
@@ -86,7 +87,18 @@ export default function RecipeDetailScreen() {
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.imageContainer}>
-                <Image source={{ uri: recipe.image }} style={styles.image} />
+                {recipe.image && !imageError ? (
+                    <Image
+                        source={{ uri: recipe.image }}
+                        style={styles.image}
+                        onError={() => setImageError(true)}
+                    />
+                ) : (
+                    <View style={[styles.image, styles.imagePlaceholder]}>
+                        <Ionicons name="image-outline" size={48} color={Colors.light.gray} />
+                        <Text style={styles.imagePlaceholderText}>Foto tidak tersedia</Text>
+                    </View>
+                )}
             </View>
 
             <View style={styles.content}>
@@ -187,9 +199,13 @@ export default function RecipeDetailScreen() {
                         {videoId ? (
                             <VideoPlayer videoId={videoId} />
                         ) : (
-                            <Text style={styles.videoPlaceholder}>
-                                Video tutorial belum tersedia untuk resep ini
-                            </Text>
+                            <View style={styles.videoPlaceholderContainer}>
+                                <Ionicons name="videocam-off-outline" size={48} color={Colors.light.gray} />
+                                <Text style={styles.videoPlaceholderTitle}>Video Tidak Tersedia</Text>
+                                <Text style={styles.videoPlaceholderText}>
+                                    Video tutorial belum tersedia untuk resep ini
+                                </Text>
+                            </View>
                         )}
                     </View>
                 )}
@@ -240,6 +256,19 @@ const styles = StyleSheet.create({
         maxWidth: 500,
         height: 280,
         borderRadius: 16,
+    },
+    imagePlaceholder: {
+        backgroundColor: '#f3f4f6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: Colors.light.border,
+        borderStyle: 'dashed',
+    },
+    imagePlaceholderText: {
+        color: Colors.light.gray,
+        fontSize: 14,
+        marginTop: 8,
     },
 
     content: {
@@ -408,11 +437,26 @@ const styles = StyleSheet.create({
     },
 
 
-    videoPlaceholder: {
+    videoPlaceholderContainer: {
+        alignItems: 'center',
+        paddingVertical: 32,
+        backgroundColor: '#f9fafb',
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: Colors.light.border,
+        borderStyle: 'dashed',
+    },
+    videoPlaceholderTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: Colors.light.text,
+        marginTop: 12,
+    },
+    videoPlaceholderText: {
         textAlign: 'center',
         color: Colors.light.gray,
-        paddingVertical: 24,
-        fontSize: 15,
+        fontSize: 13,
+        marginTop: 4,
     },
 
     tipsCard: {

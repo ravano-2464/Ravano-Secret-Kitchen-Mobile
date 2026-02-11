@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -34,11 +34,23 @@ const getDifficultyStyle = (difficulty: string) => {
 
 export default function RecipeCard({ recipe }: RecipeCardProps) {
     const diffStyle = getDifficultyStyle(recipe.difficulty);
+    const [imageError, setImageError] = useState(false);
 
     return (
         <Link href={`/recipe/${recipe.id}`} asChild>
             <TouchableOpacity style={styles.card} activeOpacity={0.9}>
-                <Image source={{ uri: recipe.image }} style={styles.image} />
+                {recipe.image && !imageError ? (
+                    <Image
+                        source={{ uri: recipe.image }}
+                        style={styles.image}
+                        onError={() => setImageError(true)}
+                    />
+                ) : (
+                    <View style={[styles.image, styles.imagePlaceholder]}>
+                        <Ionicons name="image-outline" size={40} color={Colors.light.gray} />
+                        <Text style={styles.imagePlaceholderText}>Foto tidak tersedia</Text>
+                    </View>
+                )}
                 <View style={styles.content}>
                     <View style={styles.badgeContainer}>
                         <View style={styles.badge}>
@@ -94,6 +106,16 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 200,
         resizeMode: 'cover',
+    },
+    imagePlaceholder: {
+        backgroundColor: '#f3f4f6',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    imagePlaceholderText: {
+        color: Colors.light.gray,
+        fontSize: 13,
+        marginTop: 6,
     },
     content: {
         padding: 16,
