@@ -110,6 +110,16 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │   ├── 📄 useColorScheme.ts
 │   └── 📄 useColorScheme.web.ts
 ├── 📁 public
+│   ├── 📁 images
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Home-Pages.webp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Login-Pages.webp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Logout-Modal.webp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Profile-Page.webp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-How-To-Make.webp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Ingredients.webp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Video-Tutorial.webp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Register-Pages.webp
+│   │   └── 🖼️ Ravano-Secret-Kitchen-Search-Dialog-Modal.webp
 │   └── 📁 logo
 │       └── 🖼️ Ravano-Secret-Kitchen-Logo.webp
 ├── 📁 services
@@ -125,9 +135,27 @@ Berikut adalah struktur folder utama aplikasi mobile:
 └── ⚙️ tsconfig.json
 ```
 
-## �📸 Screenshots
+## 📸 Screenshots
 
-*(Tambahkan screenshot aplikasi di sini)*
+### Login & Register
+| Login | Register |
+|:---:|:---:|
+| ![Login](public/images/Ravano-Secret-Kitchen-Login-Pages.webp) | ![Register](public/images/Ravano-Secret-Kitchen-Register-Pages.webp) |
+
+### Home & Search
+| Home | Search Dialog |
+|:---:|:---:|
+| ![Home](public/images/Ravano-Secret-Kitchen-Home-Pages.webp) | ![Search](public/images/Ravano-Secret-Kitchen-Search-Dialog-Modal.webp) |
+
+### Recipe Detail
+| Ingredients | How To Make | Video Tutorial |
+|:---:|:---:|:---:|
+| ![Ingredients](public/images/Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Ingredients.webp) | ![How To Make](public/images/Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-How-To-Make.webp) | ![Video Tutorial](public/images/Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Video-Tutorial.webp) |
+
+### Profile & Logout
+| Profile | Logout Modal |
+|:---:|:---:|
+| ![Profile](public/images/Ravano-Secret-Kitchen-Profile-Page.webp) | ![Logout](public/images/Ravano-Secret-Kitchen-Logout-Modal.webp) |
 
 ---
 
