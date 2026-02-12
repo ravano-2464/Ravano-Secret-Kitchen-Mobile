@@ -54,7 +54,6 @@ Pastikan Anda sudah menginstal Node.js dan Expo Go di HP Anda.
 
 Berikut adalah struktur folder utama aplikasi mobile:
 
-```
 ├── 📁 .qodo
 │   ├── 📁 agents
 │   └── 📁 workflows
@@ -80,6 +79,10 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │       ├── 🖼️ adaptive-icon.png
 │       ├── 🖼️ favicon.png
 │       ├── 🖼️ icon.png
+│       ├── 🖼️ rsk-adaptive-icon.png
+│       ├── 🖼️ rsk-favicon.png
+│       ├── 🖼️ rsk-icon.png
+│       ├── 🖼️ rsk-splash-icon.png
 │       └── 🖼️ splash-icon.png
 ├── 📁 components
 │   ├── 📁 __tests__
@@ -106,6 +109,9 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │   ├── 📄 useClientOnlyValue.web.ts
 │   ├── 📄 useColorScheme.ts
 │   └── 📄 useColorScheme.web.ts
+├── 📁 public
+│   └── 📁 logo
+│       └── 🖼️ Ravano-Secret-Kitchen-Logo.webp
 ├── 📁 services
 │   └── 📄 api.ts
 ├── 📁 types

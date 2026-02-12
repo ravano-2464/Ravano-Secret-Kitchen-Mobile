@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
 import { useRouter, Link } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -60,9 +60,11 @@ export default function RegisterScreen() {
             >
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                     <View style={[styles.card, { backgroundColor: colors.card }]}>
-                        <View style={[styles.logoContainer, { backgroundColor: colors.primary }]}>
-                            <Ionicons name="restaurant" size={28} color="#fff" />
-                        </View>
+                        <Image
+                            source={require('../../public/logo/Ravano-Secret-Kitchen-Logo.webp')}
+                            style={styles.logo}
+                            resizeMode="contain"
+                        />
 
                         <Text style={[styles.title, { color: colors.text }]}>Ravano Secret Kitchen</Text>
                         <Text style={[styles.subtitle, { color: colors.gray }]}>Daftar untuk mengakses ribuan resep masakan</Text>
@@ -182,12 +184,10 @@ const styles = StyleSheet.create({
         }),
         alignItems: 'center',
     },
-    logoContainer: {
-        width: 56,
-        height: 56,
-        borderRadius: 28,
-        justifyContent: 'center',
-        alignItems: 'center',
+    logo: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
         marginBottom: 20,
     },
     title: {

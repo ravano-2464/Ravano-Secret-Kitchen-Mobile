@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import Colors from '../constants/Colors';
 import { useColorScheme } from '../hooks/useColorScheme';
@@ -57,9 +57,11 @@ export default function Sidebar(props: DrawerContentComponentProps) {
         <>
             <DrawerContentScrollView {...props} contentContainerStyle={[styles.container, { backgroundColor: colors.primary }]} style={{ backgroundColor: colors.primary }}>
                 <View style={[styles.header, { backgroundColor: colors.primary }]}>
-                    <View style={styles.logoContainer}>
-                        <Ionicons name="restaurant" size={32} color={colors.primary} />
-                    </View>
+                    <Image
+                        source={require('../public/logo/Ravano-Secret-Kitchen-Logo.webp')}
+                        style={styles.logoImage}
+                        resizeMode="contain"
+                    />
                     <View style={styles.userInfo}>
                         <Text style={styles.userName}>{user?.name || 'Pengguna'}</Text>
                         <Text style={styles.userEmail}>{user?.email || 'user@example.com'}</Text>
@@ -108,13 +110,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10,
     },
-    logoContainer: {
+    logoImage: {
         width: 80,
         height: 80,
         borderRadius: 40,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
-        alignItems: 'center',
         marginBottom: 12,
     },
     userInfo: {

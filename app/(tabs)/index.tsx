@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useMemo, useState } from 'react';
-import { ActivityIndicator, FlatList, RefreshControl, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, RefreshControl, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeHeader from '../../components/HomeHeader';
 import RecipeCard from '../../components/RecipeCard';
@@ -95,9 +95,11 @@ export default function HomeScreen() {
                     <TouchableOpacity onPress={toggleDrawer} style={{ marginRight: 12 }}>
                         <Ionicons name="menu" size={28} color={colors.text} />
                     </TouchableOpacity>
-                    <View style={[styles.navbarLogo, { backgroundColor: colors.primary }]}>
-                        <Ionicons name="restaurant" size={20} color="#fff" />
-                    </View>
+                    <Image
+                        source={require('../../public/logo/Ravano-Secret-Kitchen-Logo.webp')}
+                        style={styles.navbarLogo}
+                        resizeMode="contain"
+                    />
                     <View>
                         <Text style={[styles.navbarTitle, { color: colors.text }]}>Ravano Secret Kitchen</Text>
                         <Text style={[styles.navbarSubtitle, { color: colors.gray }]}>
@@ -169,8 +171,6 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     navbarTitle: {
         fontSize: 16,
