@@ -121,6 +121,7 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Ingredients.webp
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Video-Tutorial.webp
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Register-Pages.webp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Sidebarwebp
 │   │   └── 🖼️ Ravano-Secret-Kitchen-Search-Dialog-Modal.webp
 │   └── 📁 logo
 │       └── 🖼️ Ravano-Secret-Kitchen-Logo.webp
@@ -160,6 +161,9 @@ Berikut adalah struktur folder utama aplikasi mobile:
 | Profile | Logout Modal |
 |:---:|:---:|
 | ![Profile](public/images/Ravano-Secret-Kitchen-Profile-Page.webp) | ![Logout](public/images/Ravano-Secret-Kitchen-Logout-Modal.webp) |
+
+### Sidebar
+![Sidebar](public/images/Ravano-Secret-Kitchen-Sidebar.webp)
 
 ---
 
