@@ -50,10 +50,12 @@ Pastikan Anda sudah menginstal Node.js dan Expo Go di HP Anda.
 - **HTTP Client**: `Axios`
 - **Icons**: `Ionicons` (@expo/vector-icons)
 
+---
+
 ## 📁 Struktur Proyek
 
 Berikut adalah struktur folder utama aplikasi mobile:
-
+```
 ├── 📁 .qodo
 │   ├── 📁 agents
 │   └── 📁 workflows
@@ -134,6 +136,8 @@ Berikut adalah struktur folder utama aplikasi mobile:
 ├── ⚙️ package.json
 └── ⚙️ tsconfig.json
 ```
+
+---
 
 ## 📸 Screenshots
 
