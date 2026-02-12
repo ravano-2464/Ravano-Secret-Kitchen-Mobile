@@ -20,7 +20,7 @@ Pastikan Anda sudah menginstal Node.js dan Expo Go di HP Anda.
 
 1.  **Clone Repository**
     ```bash
-    git clone https://github.com/ravan/rahasia-dapur-mobile.git
+    git clone https://github.com/ravano-2464/Ravano-Secret-Kitchen-Mobile.git
     cd mobile
     ```
 
