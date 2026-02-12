@@ -18,6 +18,7 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = async () => {
         if (!email || !password) {
@@ -82,14 +83,19 @@ export default function LoginScreen() {
                             />
 
                             <Text style={[styles.label, { color: colors.text }]}>Password</Text>
-                            <TextInput
-                                style={[styles.input, { backgroundColor: colors.card, borderColor: colors.border, color: colors.text }]}
-                                placeholder="Masukkan password"
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry
-                                placeholderTextColor={colors.gray}
-                            />
+                            <View style={[styles.passwordContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
+                                <TextInput
+                                    style={[styles.passwordInput, { color: colors.text }]}
+                                    placeholder="Masukkan password"
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    secureTextEntry={!showPassword}
+                                    placeholderTextColor={colors.gray}
+                                />
+                                <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeButton}>
+                                    <Ionicons name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={20} color={colors.gray} />
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
                         <TouchableOpacity
@@ -193,6 +199,21 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         fontSize: 15,
         borderWidth: 1,
+    },
+    passwordContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 8,
+        borderWidth: 1,
+    },
+    passwordInput: {
+        flex: 1,
+        padding: 12,
+        paddingHorizontal: 16,
+        fontSize: 15,
+    },
+    eyeButton: {
+        paddingHorizontal: 12,
     },
     button: {
         padding: 14,
