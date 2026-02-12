@@ -43,7 +43,14 @@ export default function LoginScreen() {
 
             router.replace('/(tabs)');
         } catch (err: any) {
-            setError(err.response?.data?.message || 'Terjadi kesalahan');
+            const msg = err.response?.data?.message || '';
+            if (msg.toLowerCase().includes('invalid credentials') || msg.toLowerCase().includes('invalid password')) {
+                setError('Password salah');
+            } else if (msg.toLowerCase().includes('not found') || msg.toLowerCase().includes('no user')) {
+                setError('Email tidak ditemukan');
+            } else {
+                setError(msg || 'Terjadi kesalahan');
+            }
         } finally {
             setLoading(false);
         }
