@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Colors from '../constants/Colors';
+import { useColorScheme } from '../hooks/useColorScheme';
 
 interface HomeHeaderProps {
     searchQuery: string;
@@ -24,44 +25,47 @@ export default function HomeHeader({
     onSuggestionPress,
     onSearchPress,
 }: HomeHeaderProps) {
+    const colorScheme = useColorScheme();
+    const colors = Colors[colorScheme];
+
     return (
         <View style={{ zIndex: 10 }}>
             <View style={styles.heroSection}>
-                <Text style={styles.heroTitle}>Jelajahi Resep Masakan</Text>
-                <Text style={styles.heroSubtitle}>
+                <Text style={[styles.heroTitle, { color: colors.text }]}>Jelajahi Resep Masakan</Text>
+                <Text style={[styles.heroSubtitle, { color: colors.gray }]}>
                     Temukan berbagai resep masakan Indonesia untuk keluarga dan usaha Anda
                 </Text>
 
                 <View style={styles.searchContainer}>
                     <TouchableOpacity
-                        style={styles.searchBar}
+                        style={[styles.searchBar, { backgroundColor: colors.card, borderColor: colors.border }]}
                         activeOpacity={onSearchPress ? 0.7 : 1}
                         onPress={onSearchPress}
                     >
-                        <Ionicons name="search" size={18} color={Colors.light.gray} />
+                        <Ionicons name="search" size={18} color={colors.gray} />
                         <TextInput
-                            style={styles.searchInput}
+                            style={[styles.searchInput, { color: colors.text }]}
                             placeholder="Cari resep..."
                             value={searchQuery}
                             onChangeText={setSearchQuery}
-                            placeholderTextColor={Colors.light.gray}
+                            placeholderTextColor={colors.gray}
                             editable={!onSearchPress}
                         />
                     </TouchableOpacity>
 
                     {!onSearchPress && suggestions.length > 0 && (
-                        <View style={styles.suggestionsContainer}>
+                        <View style={[styles.suggestionsContainer, { backgroundColor: colors.card, borderColor: colors.border }]}>
                             <FlatList
                                 data={suggestions}
                                 keyExtractor={(item, index) => index.toString()}
                                 keyboardShouldPersistTaps="handled"
                                 renderItem={({ item }) => (
                                     <TouchableOpacity
-                                        style={styles.suggestionItem}
+                                        style={[styles.suggestionItem, { borderBottomColor: colors.border }]}
                                         onPress={() => onSuggestionPress?.(item)}
                                     >
-                                        <Ionicons name="search-outline" size={16} color={Colors.light.gray} style={{ marginRight: 8 }} />
-                                        <Text style={styles.suggestionText}>{item}</Text>
+                                        <Ionicons name="search-outline" size={16} color={colors.gray} style={{ marginRight: 8 }} />
+                                        <Text style={[styles.suggestionText, { color: colors.text }]}>{item}</Text>
                                     </TouchableOpacity>
                                 )}
                             />
@@ -81,7 +85,8 @@ export default function HomeHeader({
                         key={category}
                         style={[
                             styles.categoryButton,
-                            activeCategory === category && styles.categoryButtonActive,
+                            { borderColor: colors.border, backgroundColor: colors.card },
+                            activeCategory === category && { backgroundColor: colors.primary, borderColor: colors.primary },
                         ]}
                         onPress={() => setActiveCategory(category)}
                         activeOpacity={0.7}
@@ -89,6 +94,7 @@ export default function HomeHeader({
                         <Text
                             style={[
                                 styles.categoryText,
+                                { color: colors.gray },
                                 activeCategory === category && styles.categoryTextActive,
                             ]}
                         >
@@ -112,13 +118,11 @@ const styles = StyleSheet.create({
     heroTitle: {
         fontSize: 22,
         fontWeight: '700',
-        color: Colors.light.gray,
         marginBottom: 8,
         textAlign: 'center',
     },
     heroSubtitle: {
         fontSize: 14,
-        color: Colors.light.gray,
         marginBottom: 16,
         textAlign: 'center',
         lineHeight: 20,
@@ -133,9 +137,7 @@ const styles = StyleSheet.create({
     searchBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.light.card,
         borderWidth: 1,
-        borderColor: Colors.light.border,
         borderRadius: 8,
         paddingHorizontal: 12,
         paddingVertical: 10,
@@ -144,7 +146,6 @@ const styles = StyleSheet.create({
     searchInput: {
         flex: 1,
         fontSize: 15,
-        color: Colors.light.text,
         padding: 0,
     },
     suggestionsContainer: {
@@ -152,11 +153,9 @@ const styles = StyleSheet.create({
         top: '100%',
         left: 0,
         right: 0,
-        backgroundColor: '#fff',
         borderRadius: 8,
         marginTop: 4,
         borderWidth: 1,
-        borderColor: Colors.light.border,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -172,11 +171,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 12,
         borderBottomWidth: 1,
-        borderBottomColor: '#f3f4f6',
     },
     suggestionText: {
         fontSize: 14,
-        color: Colors.light.text,
     },
 
     categoryContainer: {
@@ -189,18 +186,11 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         borderRadius: 20,
         borderWidth: 1,
-        borderColor: Colors.light.border,
-        backgroundColor: Colors.light.card,
         marginRight: 8,
-    },
-    categoryButtonActive: {
-        backgroundColor: Colors.light.primary,
-        borderColor: Colors.light.primary,
     },
     categoryText: {
         fontSize: 14,
         fontWeight: '500',
-        color: Colors.light.gray,
     },
     categoryTextActive: {
         color: '#fff',

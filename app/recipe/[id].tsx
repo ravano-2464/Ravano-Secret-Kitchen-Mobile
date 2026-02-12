@@ -24,16 +24,29 @@ interface Recipe {
 
 type TabType = 'ingredients' | 'instructions' | 'video';
 
-const getDifficultyStyle = (difficulty: string) => {
+const getDifficultyStyle = (difficulty: string, colorScheme: 'light' | 'dark') => {
+    const colors = Colors[colorScheme];
     switch (difficulty) {
         case 'Mudah':
-            return { borderColor: '#10b981', color: '#059669', bg: '#ecfdf5' };
+            return {
+                borderColor: '#10b981',
+                color: colorScheme === 'dark' ? '#34d399' : '#059669',
+                bg: colorScheme === 'dark' ? '#064e3b' : '#ecfdf5',
+            };
         case 'Sedang':
-            return { borderColor: '#f59e0b', color: '#d97706', bg: '#fffbeb' };
+            return {
+                borderColor: '#f59e0b',
+                color: colorScheme === 'dark' ? '#fbbf24' : '#d97706',
+                bg: colorScheme === 'dark' ? '#78350f' : '#fffbeb',
+            };
         case 'Sulit':
-            return { borderColor: '#ef4444', color: '#dc2626', bg: '#fef2f2' };
+            return {
+                borderColor: '#ef4444',
+                color: colorScheme === 'dark' ? '#f87171' : '#dc2626',
+                bg: colorScheme === 'dark' ? '#7f1d1d' : '#fef2f2',
+            };
         default:
-            return { borderColor: '#e5e7eb', color: '#6b7280', bg: '#ffffff' };
+            return { borderColor: colors.border, color: colors.gray, bg: colors.card };
     }
 };
 
@@ -86,7 +99,7 @@ export default function RecipeDetailScreen() {
     };
 
     const videoId = recipe.videoUrl ? getVideoId(recipe.videoUrl) : null;
-    const diffStyle = getDifficultyStyle(recipe.difficulty);
+    const diffStyle = getDifficultyStyle(recipe.difficulty, colorScheme);
 
     return (
         <ScrollView style={[styles.container, { backgroundColor: colors.card }]} showsVerticalScrollIndicator={false}>

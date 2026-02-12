@@ -6,11 +6,14 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import Colors from '../constants/Colors';
+import { useColorScheme } from '../hooks/useColorScheme';
 import LogoutModal from './LogoutModal';
 import SearchDialogModal from './SearchDialogModal';
 
 export default function Sidebar(props: DrawerContentComponentProps) {
     const router = useRouter();
+    const colorScheme = useColorScheme();
+    const colors = Colors[colorScheme];
     const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -52,10 +55,10 @@ export default function Sidebar(props: DrawerContentComponentProps) {
 
     return (
         <>
-            <DrawerContentScrollView {...props} contentContainerStyle={styles.container} style={{ backgroundColor: Colors.light.primary }}>
-                <View style={styles.header}>
+            <DrawerContentScrollView {...props} contentContainerStyle={[styles.container, { backgroundColor: colors.primary }]} style={{ backgroundColor: colors.primary }}>
+                <View style={[styles.header, { backgroundColor: colors.primary }]}>
                     <View style={styles.logoContainer}>
-                        <Ionicons name="restaurant" size={32} color={Colors.light.primary} />
+                        <Ionicons name="restaurant" size={32} color={colors.primary} />
                     </View>
                     <View style={styles.userInfo}>
                         <Text style={styles.userName}>{user?.name || 'Pengguna'}</Text>
@@ -99,11 +102,9 @@ export default function Sidebar(props: DrawerContentComponentProps) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Colors.light.primary,
     },
     header: {
         padding: 20,
-        backgroundColor: Colors.light.primary,
         alignItems: 'center',
         marginBottom: 10,
     },

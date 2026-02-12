@@ -143,6 +143,5 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     logoutText: {
-        color: Colors.light.error,
     },
 });

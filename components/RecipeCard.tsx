@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from 'react
 import { Link } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import { useColorScheme } from '../hooks/useColorScheme';
 
 interface Recipe {
     id: string;
@@ -19,26 +20,41 @@ interface RecipeCardProps {
     recipe: Recipe;
 }
 
-const getDifficultyStyle = (difficulty: string) => {
+const getDifficultyStyle = (difficulty: string, colorScheme: 'light' | 'dark') => {
+    const colors = Colors[colorScheme];
     switch (difficulty) {
         case 'Mudah':
-            return { borderColor: '#10b981', color: '#059669', bg: '#ecfdf5' };
+            return {
+                borderColor: '#10b981',
+                color: colorScheme === 'dark' ? '#34d399' : '#059669',
+                bg: colorScheme === 'dark' ? '#064e3b' : '#ecfdf5',
+            };
         case 'Sedang':
-            return { borderColor: '#f59e0b', color: '#d97706', bg: '#fffbeb' };
+            return {
+                borderColor: '#f59e0b',
+                color: colorScheme === 'dark' ? '#fbbf24' : '#d97706',
+                bg: colorScheme === 'dark' ? '#78350f' : '#fffbeb',
+            };
         case 'Sulit':
-            return { borderColor: '#ef4444', color: '#dc2626', bg: '#fef2f2' };
+            return {
+                borderColor: '#ef4444',
+                color: colorScheme === 'dark' ? '#f87171' : '#dc2626',
+                bg: colorScheme === 'dark' ? '#7f1d1d' : '#fef2f2',
+            };
         default:
-            return { borderColor: Colors.light.border, color: Colors.light.gray, bg: Colors.light.card };
+            return { borderColor: colors.border, color: colors.gray, bg: colors.card };
     }
 };
 
 export default function RecipeCard({ recipe }: RecipeCardProps) {
-    const diffStyle = getDifficultyStyle(recipe.difficulty);
+    const colorScheme = useColorScheme();
+    const colors = Colors[colorScheme];
+    const diffStyle = getDifficultyStyle(recipe.difficulty, colorScheme);
     const [imageError, setImageError] = useState(false);
 
     return (
         <Link href={`/recipe/${recipe.id}`} asChild>
-            <TouchableOpacity style={styles.card} activeOpacity={0.9}>
+            <TouchableOpacity style={[styles.card, { backgroundColor: colors.card }]} activeOpacity={0.9}>
                 {recipe.image && !imageError ? (
                     <Image
                         source={{ uri: recipe.image }}
@@ -46,14 +62,14 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
                         onError={() => setImageError(true)}
                     />
                 ) : (
-                    <View style={[styles.image, styles.imagePlaceholder]}>
-                        <Ionicons name="image-outline" size={40} color={Colors.light.gray} />
-                        <Text style={styles.imagePlaceholderText}>Foto tidak tersedia</Text>
+                    <View style={[styles.image, styles.imagePlaceholder, { backgroundColor: colors.border }]}>
+                        <Ionicons name="image-outline" size={40} color={colors.gray} />
+                        <Text style={[styles.imagePlaceholderText, { color: colors.gray }]}>Foto tidak tersedia</Text>
                     </View>
                 )}
                 <View style={styles.content}>
                     <View style={styles.badgeContainer}>
-                        <View style={styles.badge}>
+                        <View style={[styles.badge, { backgroundColor: colors.primary }]}>
                             <Text style={styles.badgeText}>{recipe.category}</Text>
                         </View>
                         <View style={[styles.difficultyBadge, { borderColor: diffStyle.borderColor, backgroundColor: diffStyle.bg }]}>
@@ -61,20 +77,20 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
                         </View>
                     </View>
 
-                    <Text style={styles.title} numberOfLines={2}>{recipe.title}</Text>
+                    <Text style={[styles.title, { color: colors.text }]} numberOfLines={2}>{recipe.title}</Text>
 
                     {recipe.description ? (
-                        <Text style={styles.description} numberOfLines={2}>{recipe.description}</Text>
+                        <Text style={[styles.description, { color: colors.gray }]} numberOfLines={2}>{recipe.description}</Text>
                     ) : null}
 
                     <View style={styles.footer}>
                         <View style={styles.infoItem}>
-                            <Ionicons name="time-outline" size={14} color={Colors.light.gray} />
-                            <Text style={styles.infoText}>{recipe.time}</Text>
+                            <Ionicons name="time-outline" size={14} color={colors.gray} />
+                            <Text style={[styles.infoText, { color: colors.gray }]}>{recipe.time}</Text>
                         </View>
                         <View style={styles.infoItem}>
-                            <Ionicons name="people-outline" size={14} color={Colors.light.gray} />
-                            <Text style={styles.infoText}>{recipe.servings || '-'}</Text>
+                            <Ionicons name="people-outline" size={14} color={colors.gray} />
+                            <Text style={[styles.infoText, { color: colors.gray }]}>{recipe.servings || '-'}</Text>
                         </View>
                     </View>
                 </View>
@@ -85,7 +101,6 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: Colors.light.card,
         borderRadius: 16,
         marginBottom: 20,
         ...Platform.select({
@@ -108,12 +123,10 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     imagePlaceholder: {
-        backgroundColor: '#f3f4f6',
         justifyContent: 'center',
         alignItems: 'center',
     },
     imagePlaceholderText: {
-        color: Colors.light.gray,
         fontSize: 13,
         marginTop: 6,
     },
@@ -127,7 +140,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     badge: {
-        backgroundColor: Colors.light.primary,
         paddingHorizontal: 12,
         paddingVertical: 4,
         borderRadius: 20,
@@ -150,13 +162,11 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 17,
         fontWeight: '600',
-        color: Colors.light.text,
         marginBottom: 6,
         lineHeight: 22,
     },
     description: {
         fontSize: 14,
-        color: Colors.light.gray,
         lineHeight: 20,
         marginBottom: 10,
     },
@@ -172,7 +182,6 @@ const styles = StyleSheet.create({
     },
     infoText: {
         fontSize: 12,
-        color: Colors.light.gray,
         fontWeight: '500',
     },
 });

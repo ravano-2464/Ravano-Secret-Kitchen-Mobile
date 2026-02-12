@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 import Toast from 'react-native-toast-message';
 
 import { toastConfig } from '@/components/CustomToast';
+import Colors from '@/constants/Colors';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -50,6 +51,7 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const colors = Colors[colorScheme];
 
   return (
     <NavigationThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
@@ -61,8 +63,8 @@ function RootLayoutNav() {
           options={{
             title: 'Detail Resep',
             headerBackTitle: 'Kembali',
-            headerStyle: { backgroundColor: '#ffffff' },
-            headerTintColor: '#374151',
+            headerStyle: { backgroundColor: colors.card },
+            headerTintColor: colors.text,
             headerShadowVisible: true,
           }}
         />
