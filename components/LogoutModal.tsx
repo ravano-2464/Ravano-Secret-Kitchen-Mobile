@@ -1,5 +1,4 @@
-import React from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Colors from '../constants/Colors';
 import { useColorScheme } from '../hooks/useColorScheme';
 
@@ -20,28 +19,30 @@ export default function LogoutModal({ visible, onClose, onConfirm }: LogoutModal
             animationType="fade"
             onRequestClose={onClose}
         >
-            <View style={styles.modalOverlay}>
-                <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
-                    <Text style={[styles.title, { color: colors.text }]}>Konfirmasi Keluar</Text>
-                    <Text style={[styles.message, { color: colors.gray }]}>Apakah Anda yakin ingin keluar dari aplikasi?</Text>
+            <Pressable style={styles.modalOverlay} onPress={onClose}>
+                <Pressable onPress={() => { }}>
+                    <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
+                        <Text style={[styles.title, { color: colors.text }]}>Konfirmasi Keluar</Text>
+                        <Text style={[styles.message, { color: colors.gray }]}>Apakah Anda yakin ingin keluar dari aplikasi?</Text>
 
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity
-                            style={[styles.button, { backgroundColor: colors.border }]}
-                            onPress={onClose}
-                        >
-                            <Text style={[styles.cancelButtonText, { color: colors.text }]}>Batal</Text>
-                        </TouchableOpacity>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity
+                                style={[styles.button, { backgroundColor: colors.border }]}
+                                onPress={onClose}
+                            >
+                                <Text style={[styles.cancelButtonText, { color: colors.text }]}>Batal</Text>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={[styles.button, { backgroundColor: colors.primary }]}
-                            onPress={onConfirm}
-                        >
-                            <Text style={styles.confirmButtonText}>Keluar</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.button, { backgroundColor: colors.primary }]}
+                                onPress={onConfirm}
+                            >
+                                <Text style={styles.confirmButtonText}>Keluar</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-            </View>
+                </Pressable>
+            </Pressable>
         </Modal>
     );
 }

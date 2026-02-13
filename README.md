@@ -121,7 +121,8 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Ingredients.webp
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Video-Tutorial.webp
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Register-Pages.webp
-│   │   ├── 🖼️ Ravano-Secret-Kitchen-Sidebarwebp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Sidebar.webp
+│   │   ├── 🖼️ Ravano-Secret-Kitchen-Settings-Modal.webp
 │   │   └── 🖼️ Ravano-Secret-Kitchen-Search-Dialog-Modal.webp
 │   └── 📁 logo
 │       └── 🖼️ Ravano-Secret-Kitchen-Logo.webp
@@ -158,9 +159,10 @@ Berikut adalah struktur folder utama aplikasi mobile:
 | ![Ingredients](public/images/Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Ingredients.webp) | ![How To Make](public/images/Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-How-To-Make.webp) | ![Video Tutorial](public/images/Ravano-Secret-Kitchen-Recipe-Detail-Pages-Tabs-Video-Tutorial.webp) |
 
 ### Profile & Logout
-| Profile | Logout Modal |
-|:---:|:---:|
-| ![Profile](public/images/Ravano-Secret-Kitchen-Profile-Page.webp) | ![Logout](public/images/Ravano-Secret-Kitchen-Logout-Modal.webp) |
+| Profile | Logout Modal | Setting Modal |
+|:---:|:---:| :---:|
+| ![Profile](public/images/Ravano-Secret-Kitchen-Profile-Page.webp) | ![Logout](public/images/Ravano-Secret-Kitchen-Logout-Modal.webp) | ![Settings](public/images/Ravano-Secret-Kitchen-Settings-Modal.webp) |
+
 
 ### Sidebar
 ![Sidebar](public/images/Ravano-Secret-Kitchen-Sidebar.webp)

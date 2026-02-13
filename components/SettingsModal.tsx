@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import { ThemePreference, useTheme } from '../context/ThemeContext';
@@ -26,8 +26,8 @@ export default function SettingsModal({ visible, onClose }: SettingsModalProps) 
             animationType="fade"
             onRequestClose={onClose}
         >
-            <View style={styles.modalOverlay}>
-                <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
+            <Pressable style={styles.modalOverlay} onPress={onClose}>
+                <Pressable onPress={() => {}} style={[styles.modalContent, { backgroundColor: colors.card }]}>
                     <View style={styles.header}>
                         <Text style={[styles.title, { color: colors.text }]}>Pengaturan</Text>
                         <TouchableOpacity onPress={onClose}>
@@ -78,8 +78,8 @@ export default function SettingsModal({ visible, onClose }: SettingsModalProps) 
                     >
                         <Text style={styles.closeButtonText}>Selesai</Text>
                     </TouchableOpacity>
-                </View>
-            </View>
+                </Pressable>
+            </Pressable>
         </Modal>
     );
 }
