@@ -57,6 +57,7 @@ Pastikan Anda sudah menginstal Node.js dan Expo Go di HP Anda.
 Berikut adalah struktur folder utama aplikasi mobile beserta penjelasannya:
 
 ```
+Mobile/
 ├── 📁 app                          # Routing & halaman aplikasi (Expo Router)
 │   ├── 📁 (auth)                   # Grup route autentikasi
 │   │   ├── 📄 _layout.tsx          # Layout wrapper untuk halaman auth
