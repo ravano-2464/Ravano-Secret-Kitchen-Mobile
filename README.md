@@ -54,65 +54,63 @@ Pastikan Anda sudah menginstal Node.js dan Expo Go di HP Anda.
 
 ## 📁 Struktur Proyek
 
-Berikut adalah struktur folder utama aplikasi mobile:
+Berikut adalah struktur folder utama aplikasi mobile beserta penjelasannya:
+
 ```
-├── 📁 .qodo
-│   ├── 📁 agents
-│   └── 📁 workflows
-├── 📁 app
-│   ├── 📁 (auth)
-│   │   ├── 📄 _layout.tsx
-│   │   ├── 📄 login.tsx
-│   │   └── 📄 register.tsx
-│   ├── 📁 (tabs)
-│   │   ├── 📄 _layout.tsx
-│   │   ├── 📄 index.tsx
-│   │   └── 📄 profile.tsx
-│   ├── 📁 recipe
-│   │   └── 📄 [id].tsx
-│   ├── 📄 +html.tsx
-│   ├── 📄 +not-found.tsx
-│   ├── 📄 _layout.tsx
-│   └── 📄 modal.tsx
-├── 📁 assets
-│   ├── 📁 fonts
+├── 📁 app                          # Routing & halaman aplikasi (Expo Router)
+│   ├── 📁 (auth)                   # Grup route autentikasi
+│   │   ├── 📄 _layout.tsx          # Layout wrapper untuk halaman auth
+│   │   ├── 📄 login.tsx            # Halaman login pengguna
+│   │   └── 📄 register.tsx         # Halaman registrasi pengguna baru
+│   ├── 📁 (tabs)                   # Grup route tab navigasi utama
+│   │   ├── 📄 _layout.tsx          # Layout & konfigurasi tab bar
+│   │   ├── 📄 index.tsx            # Halaman beranda (Tab Home)
+│   │   └── 📄 profile.tsx          # Halaman profil pengguna (Tab Profile)
+│   ├── 📁 recipe                   # Route dinamis untuk detail resep
+│   │   └── 📄 [id].tsx             # Halaman detail resep berdasarkan ID
+│   ├── 📄 +html.tsx                # Kustomisasi HTML untuk platform web
+│   ├── 📄 +not-found.tsx           # Halaman 404 (route tidak ditemukan)
+│   ├── 📄 _layout.tsx              # Root layout aplikasi (provider global)
+│   └── 📄 modal.tsx                # Halaman modal bawaan
+├── 📁 assets                       # Aset statis aplikasi
+│   ├── 📁 fonts                    # Custom fonts
 │   │   └── 📄 SpaceMono-Regular.ttf
-│   └── 📁 images
-│       ├── 🖼️ adaptive-icon.png
-│       ├── 🖼️ favicon.png
-│       ├── 🖼️ icon.png
-│       ├── 🖼️ rsk-adaptive-icon.png
-│       ├── 🖼️ rsk-favicon.png
-│       ├── 🖼️ rsk-icon.png
-│       ├── 🖼️ rsk-splash-icon.png
-│       └── 🖼️ splash-icon.png
-├── 📁 components
-│   ├── 📁 __tests__
-│   │   └── 📄 StyledText-test.js
-│   ├── 📄 CustomToast.tsx
-│   ├── 📄 EditScreenInfo.tsx
-│   ├── 📄 ExternalLink.tsx
-│   ├── 📄 HomeHeader.tsx
-│   ├── 📄 LogoutModal.tsx
-│   ├── 📄 RecipeCard.tsx
-│   ├── 📄 SearchDialogModal.tsx
-│   ├── 📄 SettingsModal.tsx
-│   ├── 📄 Sidebar.tsx
-│   ├── 📄 StyledText.tsx
-│   ├── 📄 Themed.tsx
-│   ├── 📄 VideoPlayer.tsx
-│   └── 📄 VideoPlayer.web.tsx
-├── 📁 constants
-│   └── 📄 Colors.ts
-├── 📁 context
-│   └── 📄 ThemeContext.tsx
-├── 📁 hooks
-│   ├── 📄 useClientOnlyValue.ts
-│   ├── 📄 useClientOnlyValue.web.ts
-│   ├── 📄 useColorScheme.ts
-│   └── 📄 useColorScheme.web.ts
-├── 📁 public
-│   ├── 📁 images
+│   └── 📁 images                   # Ikon & gambar aplikasi
+│       ├── 🖼️ adaptive-icon.png    # Ikon adaptif Android (default)
+│       ├── 🖼️ favicon.png          # Favicon untuk platform web (default)
+│       ├── 🖼️ icon.png             # Ikon utama aplikasi (default)
+│       ├── 🖼️ rsk-adaptive-icon.png # Ikon adaptif Android (RSK)
+│       ├── 🖼️ rsk-favicon.png      # Favicon untuk platform web (RSK)
+│       ├── 🖼️ rsk-icon.png         # Ikon utama aplikasi (RSK)
+│       ├── 🖼️ rsk-splash-icon.png  # Ikon splash screen (RSK)
+│       └── 🖼️ splash-icon.png      # Ikon splash screen (default)
+├── 📁 components                   # Komponen UI yang dapat digunakan ulang
+│   ├── 📁 __tests__                # Unit test untuk komponen
+│   │   └── 📄 StyledText-test.js   # Test untuk komponen StyledText
+│   ├── 📄 CustomToast.tsx          # Notifikasi toast kustom (swipe-to-dismiss)
+│   ├── 📄 EditScreenInfo.tsx       # Komponen informasi edit screen
+│   ├── 📄 ExternalLink.tsx         # Komponen link ke URL eksternal
+│   ├── 📄 HomeHeader.tsx           # Header beranda dengan search bar & sidebar toggle
+│   ├── 📄 LogoutModal.tsx          # Modal konfirmasi logout
+│   ├── 📄 RecipeCard.tsx           # Kartu resep untuk ditampilkan di daftar
+│   ├── 📄 SearchDialogModal.tsx    # Modal dialog pencarian resep
+│   ├── 📄 SettingsModal.tsx        # Modal pengaturan (tema, dll)
+│   ├── 📄 Sidebar.tsx              # Navigasi sidebar (drawer)
+│   ├── 📄 StyledText.tsx           # Komponen teks dengan styling kustom
+│   ├── 📄 Themed.tsx               # Komponen dasar yang mendukung tema (Text, View)
+│   ├── 📄 VideoPlayer.tsx          # Pemutar video untuk platform native
+│   └── 📄 VideoPlayer.web.tsx      # Pemutar video untuk platform web
+├── 📁 constants                    # Konstanta & konfigurasi global
+│   └── 📄 Colors.ts               # Definisi palet warna (light & dark theme)
+├── 📁 context                      # React Context untuk state global
+│   └── 📄 ThemeContext.tsx         # Context provider untuk manajemen tema
+├── 📁 hooks                        # Custom React hooks
+│   ├── 📄 useClientOnlyValue.ts    # Hook untuk nilai khusus client-side (native)
+│   ├── 📄 useClientOnlyValue.web.ts # Hook untuk nilai khusus client-side (web)
+│   ├── 📄 useColorScheme.ts        # Hook deteksi skema warna perangkat (native)
+│   └── 📄 useColorScheme.web.ts    # Hook deteksi skema warna perangkat (web)
+├── 📁 public                       # File publik & screenshot dokumentasi
+│   ├── 📁 images                   # Screenshot aplikasi untuk README
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Home-Pages.webp
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Login-Pages.webp
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Logout-Modal.webp
@@ -124,20 +122,39 @@ Berikut adalah struktur folder utama aplikasi mobile:
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Sidebar.webp
 │   │   ├── 🖼️ Ravano-Secret-Kitchen-Settings-Modal.webp
 │   │   └── 🖼️ Ravano-Secret-Kitchen-Search-Dialog-Modal.webp
-│   └── 📁 logo
+│   └── 📁 logo                     # Logo aplikasi
 │       └── 🖼️ Ravano-Secret-Kitchen-Logo.webp
-├── 📁 services
-│   └── 📄 api.ts
-├── 📁 types
-│   └── 📄 Recipe.ts
-├── ⚙️ .gitignore
-├── 📝 README.md
-├── ⚙️ app.json
-├── 📄 babel.config.js
-├── ⚙️ package-lock.json
-├── ⚙️ package.json
-└── ⚙️ tsconfig.json
+├── 📁 services                     # Layer komunikasi dengan API backend
+│   └── 📄 api.ts                   # Konfigurasi Axios & endpoint API
+├── 📁 types                        # Definisi TypeScript types/interfaces
+│   └── 📄 Recipe.ts                # Interface untuk data resep
+├── ⚙️ .env                         # Environment variables (API URL, dsb.)
+├── ⚙️ .gitignore                   # Daftar file/folder yang diabaikan Git
+├── 📄 babel.config.js              # Konfigurasi Babel transpiler
+├── � expo-env.d.ts                # Deklarasi tipe environment Expo
+├── ⚙️ app.json                     # Konfigurasi utama proyek Expo
+├── ⚙️ package.json                 # Metadata proyek & daftar dependencies
+├── ⚙️ package-lock.json            # Lock file versi dependencies
+├── ⚙️ tsconfig.json                # Konfigurasi TypeScript compiler
+└── 📝 README.md                    # Dokumentasi proyek ini
 ```
+
+### 📖 Penjelasan Struktur
+
+| Folder / File | Deskripsi |
+|---|---|
+| **`app/`** | Folder inti untuk **file-based routing** menggunakan Expo Router. Setiap file `.tsx` di sini otomatis menjadi route/halaman. Grup `(auth)` menangani alur autentikasi, sedangkan `(tabs)` mendefinisikan navigasi tab utama (Home & Profile). Folder `recipe/` menggunakan dynamic route `[id].tsx` untuk menampilkan detail resep berdasarkan ID. |
+| **`assets/`** | Menyimpan **aset statis** seperti font kustom (`SpaceMono-Regular.ttf`) dan gambar ikon aplikasi. Gambar dengan prefix `rsk-` adalah ikon bermerek Ravano Secret Kitchen. |
+| **`components/`** | Kumpulan **komponen UI reusable** yang digunakan di berbagai halaman. Termasuk `HomeHeader` (header beranda), `RecipeCard` (kartu resep), `Sidebar` (navigasi samping), `SearchDialogModal` (pencarian), `CustomToast` (notifikasi), dan lainnya. File `.web.tsx` menandakan implementasi khusus platform web. |
+| **`constants/`** | Menyimpan **nilai konstanta** yang digunakan secara global, seperti `Colors.ts` yang mendefinisikan palet warna untuk tema terang (light) dan gelap (dark). |
+| **`context/`** | Berisi **React Context providers** untuk state management global. `ThemeContext.tsx` mengelola tema aplikasi (light/dark mode) agar dapat diakses di seluruh komponen. |
+| **`hooks/`** | Kumpulan **custom React hooks** untuk logika yang dapat digunakan ulang. File `.web.ts` menyediakan implementasi alternatif untuk platform web (misalnya deteksi skema warna). |
+| **`public/`** | Menyimpan **file publik** berupa screenshot aplikasi (format `.webp`) yang digunakan untuk dokumentasi README, beserta logo resmi aplikasi. |
+| **`services/`** | **Service layer** yang menangani komunikasi HTTP dengan API backend. `api.ts` mengkonfigurasi instance Axios dan mendefinisikan base URL dari environment variable. |
+| **`types/`** | Berisi **definisi TypeScript types dan interfaces**. `Recipe.ts` mendefinisikan struktur data resep yang digunakan di seluruh aplikasi untuk type safety. |
+| **`app.json`** | File konfigurasi utama proyek **Expo**, berisi nama aplikasi, ikon, splash screen, dan pengaturan platform (Android/iOS/Web). |
+| **`tsconfig.json`** | Konfigurasi **TypeScript compiler**, termasuk path aliases dan strict mode settings. |
+| **`.env`** | File **environment variables** yang menyimpan konfigurasi sensitif seperti URL API backend (`EXPO_PUBLIC_API_URL`). |
 
 ---
 
